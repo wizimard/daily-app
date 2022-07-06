@@ -1,0 +1,24 @@
+.list-item {
+    padding: 10px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #F9F7F7;
+
+    cursor: pointer;
+
+    &_new {
+        background-color: #7784FB;
+    }
+    &_active {
+        background-color: #3455C6;
+    }
+    &:hover {
+        background-color: #98B6D9;
+    }
+}
+.bg-none {
+    background: inherit;
+}
