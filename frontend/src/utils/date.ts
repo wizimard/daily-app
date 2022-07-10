@@ -1,4 +1,4 @@
-const months = [
+export const months = [
     "January",
     "February",
     "March",
@@ -19,5 +19,5 @@ export function formatDate(strDate: string = (new Date()).toString()): string {
 
     const currentDate = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 
-    return currentDate;    
+    return currentDate;
 }

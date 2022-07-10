@@ -11,6 +11,12 @@
       "email": "user2@user.ru",
       "password": "user2",
       "username": "User 2"
+    },
+    {
+      "email": "user5@user.ru",
+      "password": "user5",
+      "username": "user5@user.ru",
+      "id": "OqCO-zR"
     }
   ],
   "entries": [
@@ -63,21 +69,21 @@
           "author": "maxim"
         }
       ],
-      "tasks": [
+      "todos": [
         {
           "id": "1",
           "content": "Create react app",
-          "tasks": [
+          "todos": [
             {
               "id": "2",
               "content": "Create react app",
-              "tasks": [],
+              "todos": [],
               "isDone": true
             },
             {
               "id": "3",
               "content": "Create layout using scss. Add authorization with google, facebook, whatsup",
-              "tasks": [],
+              "todos": [],
               "isDone": false
             }
           ],
@@ -86,17 +92,17 @@
         {
           "id": "4",
           "content": "Create backend app",
-          "tasks": [
+          "todos": [
             {
               "id": "5",
               "content": "Create node js app",
-              "tasks": [],
+              "todos": [],
               "isDone": false
             },
             {
               "id": "6",
               "content": "Use node js",
-              "tasks": [],
+              "todos": [],
               "isDone": true
             }
           ],
@@ -106,27 +112,27 @@
     },
     {
       "id": "2",
-      "date_start": "Sun Jan 15 2017 00:00:00 GMT+0600 (Омск, стандартное время)",
-      "date_end": "Sun Feb 20 2017 00:00:00 GMT+0600 (Омск, стандартное время)",
-      "title": "Just do it",
+      "date_start": "15 January 2017",
+      "date_end": "20 February 2017",
+      "title": "Hello world!",
       "description": "Abracadabra, hello world!",
       "comments": [
         {
           "id": "2",
-          "date": "Sun Jan 25 2017 00:00:00 GMT+0600 (Омск, стандартное время)",
+          "date": "25 January 2017",
           "content": "Hello world!",
           "author": "maxim"
         }
       ],
-      "tasks": [
+      "todos": [
         {
           "id": "7",
           "content": "Print some text",
-          "tasks": [
+          "todos": [
             {
               "id": "8",
               "content": "Moon, sun, world!",
-              "tasks": [],
+              "todos": [],
               "isDone": true
             }
           ],
@@ -135,23 +141,27 @@
         {
           "id": "9",
           "content": "cook some cookies",
-          "tasks": [
+          "todos": [
             {
               "id": "10",
               "content": "Prepare the kitchen",
-              "tasks": [],
+              "todos": [],
               "isDone": false
             },
             {
               "id": "11",
               "content": "Cook",
-              "tasks": [],
+              "todos": [],
               "isDone": true
             }
           ],
           "isDone": false
         }
-      ]
+      ],
+      "status": {
+        "done": "2/5",
+        "status": "critical"
+      }
     }
   ]
 }

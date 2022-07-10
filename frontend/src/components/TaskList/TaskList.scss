@@ -35,8 +35,8 @@
 
         display: flex;
         flex-direction: column;
-        align-items: end;
-        justify-content: end;
+        align-items: flex-end;
+        justify-content: flex-end;
     }
     &__date, &__title {
         word-break: break-all;

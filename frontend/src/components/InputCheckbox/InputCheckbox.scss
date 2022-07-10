@@ -1,0 +1,22 @@
+.input-ckeckbox {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #fff;
+    
+    border: 1px solid #000;
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    & input {
+        display: none;
+    }
+    &-done {
+        border: 1px solid #1BE717;
+    }
+}

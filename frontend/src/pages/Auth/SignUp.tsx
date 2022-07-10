@@ -1,12 +1,17 @@
 import React from "react";
 import { Formik, Form, Field  } from "formik";
 
+import { useAppDispatch } from "../../hooks/redux";
+
 import MailWhitePng1x from "../../assets/img/mail-white1x.png";
 import MailWhitePng2x from "../../assets/img/mail-white2x.png";
 import LockWhitePng1x from "../../assets/img/lock-white1x.png";
 import LockWhitePng2x from "../../assets/img/lock-white2x.png";
+import { userSignUp } from "../../redux/action-creator/UserActionCreator";
 
 const SignUp:React.FC = () => {
+
+    const dispatch = useAppDispatch();
 
     const initialValues = { email: '', password: '', repeatPassword: '' };
 
@@ -41,7 +46,8 @@ const SignUp:React.FC = () => {
                 return errors;
             }}
             onSubmit={(values, actions) => {
-                console.log(values);
+                dispatch(userSignUp(values.email, values.password));
+                actions.setSubmitting(false);
             }}
         >
             {({
@@ -108,7 +114,7 @@ const SignUp:React.FC = () => {
                 <button type="submit" 
                     className="auth__btn"
                     disabled={isSubmitting}>
-                        Sign In
+                        Sign Up
                 </button>
             </Form>
        )}

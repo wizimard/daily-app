@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { TaskItems } from "../../components";
+import { ContentScreen, TaskActive, TaskList } from "../../components";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchTasks } from "../../redux/action-creator/TaskActionCreator";
@@ -36,7 +36,10 @@ const Task:React.FC = () => {
     
     return (
         <div className="task page-container">
-            <TaskItems tasks={tasks} activeItem={taskId || ""} />
+            <TaskList tasks={tasks} activeItem={taskId || ""} />
+            <ContentScreen>
+                <TaskActive />
+            </ContentScreen>
         </div>
     );
 }

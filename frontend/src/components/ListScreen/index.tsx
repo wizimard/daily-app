@@ -1,13 +1,3 @@
-import React from "react";
-
-import './ListScreen.scss';
-
-const ListScreen: React.FC = ({ children }) => {
-    return (
-        <div className="list-screen">
-            {children}
-        </div>
-    );
-}
+import ListScreen from "./ListScreen";
 
 export default ListScreen;

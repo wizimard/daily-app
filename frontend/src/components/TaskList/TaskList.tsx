@@ -10,14 +10,14 @@ import addBlackImg2x from "../../assets/img/add-black2x.png";
 import DangerousPng from "../../assets/img/dangerous.png";
 import CriticalPng from "../../assets/img/critical.png";
 
-import "./TaskItems.scss";
+import "./TaskList.scss";
 
-interface TaskItemsProps {
+interface TaskListProps {
     tasks: ITask[];
     activeItem: string;
 }
 
-const TaskItems:React.FC<TaskItemsProps> = ({tasks, activeItem}) => {
+const TaskList:React.FC<TaskListProps> = ({tasks, activeItem}) => {
 
     return (
         <ListScreen>
@@ -67,4 +67,4 @@ const TaskItems:React.FC<TaskItemsProps> = ({tasks, activeItem}) => {
     );
 }
 
-export default TaskItems;
+export default TaskList;

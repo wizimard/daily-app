@@ -1,0 +1,146 @@
+.task {
+    &__header {
+        margin-bottom: 17px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &--left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            & .img-container {
+                margin-left: 10px;
+            }
+        }
+        &--right .img-container {
+            width: 30px;
+            height: 30px;
+
+            cursor: pointer;
+        }
+    }
+    &__date {
+        cursor: pointer;
+
+        &:first-child {
+            margin-right: 0.5em;
+        }
+        &:nth-child(2) {
+            margin-left: 0.5em;
+        }
+    }
+    &__title {
+        width: 100%;
+
+        & textarea {
+            margin-bottom: 10px;
+        
+            font-size: 1.33em;
+            line-height: 28px;
+        
+            text-align: center;
+        }
+    }
+    &__block {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+
+        background-color: rgba(0, 0, 0, 0.1);
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    &__comment {
+        margin-top: 10px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        &--header {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            & .img-container {
+                cursor: pointer;
+            }
+        }
+        
+        &--date {
+            margin-bottom: 5px;
+        }
+        &--content {
+            width: 100%;
+            padding: 0 10px;
+
+            word-break: break-all;
+        }
+    }
+    &__btn {
+        &--cancel {
+            margin-left: 20px;
+        }
+        &-group {
+            width: 100%;
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
+.todo {
+    padding-bottom: 10px;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    &__status {
+        margin-right: 10px;
+    }
+    &__content {
+        width: 100%;
+    }
+    &__actions {
+        display: flex;
+        align-items: center;
+
+        & .img-container {
+            width: 24px;
+            height: 24px;
+
+            cursor: pointer;
+        }
+    }
+    &__add {
+        margin-right: 5px;
+    }
+    &-add {
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        cursor: pointer;
+
+        &:hover {
+            background-color: #fff;
+        }
+
+        &__img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+    }
+}

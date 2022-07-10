@@ -1,0 +1,115 @@
+.calendar {
+    padding: 20px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: #fff;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &-container {
+        width: 100%;
+        height: 100%;
+
+        position: relative;
+
+        background-color: rgba($color: #000000, $alpha: 0.5);
+    }
+    &__month {
+        width: 100%;
+        padding-bottom: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &--arrow {
+            padding: 5px;
+            
+            display: inline-block;
+
+            border: solid black;
+            border-width: 0 5px 5px 0;
+
+            cursor: pointer;
+
+            &:hover {
+                border-color: #1461E8;
+            }
+        }
+        &--prev {
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+        }
+        &--next {
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+        &--value {
+            width: 50%;
+            padding: 0 10px;
+
+            font-size: 1.5em;
+
+            text-align: center;
+        }
+    }
+    &__day {
+        width: 80px;
+
+        text-align: center;
+
+        &s {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    &__date {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 1em;
+
+        border-radius: 50%;
+
+        cursor: pointer;
+        
+        &:hover {
+            background-color: #1461E8;
+        }
+        &_active {
+            background-color: #1BE717;
+        }
+        &_today {
+            background-color: #558BE8;
+        }
+        &s {
+            padding-top: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        &--container {
+            width: 80px;
+            height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

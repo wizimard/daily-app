@@ -7,7 +7,7 @@ export interface IComment {
 export interface ITodo {
     id: string;
     content: string;
-    tasks: ITodo[];
+    todos: ITodo[];
     isDone: boolean;
 }
 export interface ITask {
@@ -17,7 +17,7 @@ export interface ITask {
     title: string;
     description: string;
     comments: IComment[];
-    tasks: ITodo[];
+    todos: ITodo[];
     status: {
         done: string;
         status?: string;

@@ -1,6 +1,6 @@
 import { ITodo } from "../models/ITask";
 
-export function getTaskStatus(date_start: string, date_end: string, todos: ITodo[]) {
+export function getTaskStatus(date_start: string, date_end: string, todos: ITodo[]) {    
     let allToDo = 0;
     let doneToDo = 0;
 
@@ -13,9 +13,9 @@ export function getTaskStatus(date_start: string, date_end: string, todos: ITodo
     while (stack.length > 0) {
         let todo = stack.pop();
 
-        if (todo?.tasks) {
-            todo.tasks.forEach((task) => {
-                stack.push(task);
+        if (todo?.todos) {
+            todo.todos.forEach((todo) => {
+                stack.push(todo);
             });
         }
 

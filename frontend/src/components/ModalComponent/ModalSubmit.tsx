@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { systemHideModal } from "../../redux/reducers/SystemSlice";
@@ -11,6 +12,8 @@ const ModalSubmit:React.FC = () => {
 
     const dispatch = useAppDispatch();
 
+    const navigate = useNavigate();
+
     const modal = useAppSelector(state => state.system.modal);
 
     const [isSubmit, setIsSubmit] = useState(false);
@@ -19,9 +22,11 @@ const ModalSubmit:React.FC = () => {
         setIsSubmit(true);
         if ('type' in modal.props && 'id' in modal.props) {
 
-            const func = functionsSubmitted[modal.props.type];
-            dispatch(func(modal.props.id)).then(() => {
+            const param = functionsSubmitted[modal.props.type];
+
+            dispatch(param.func(modal.props.id)).then(() => {
                 dispatch(systemHideModal());
+                navigate(param.redirect);
             });
 
         }

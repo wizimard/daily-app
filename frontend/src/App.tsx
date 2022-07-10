@@ -5,8 +5,9 @@ import { Sidebar, SystemComponent, Spinner } from './components';
 
 import { routes } from './routes';
 
-import './App.scss';
 import { useAppSelector } from './hooks/redux';
+
+import './App.scss';
 
 function App() {
 
