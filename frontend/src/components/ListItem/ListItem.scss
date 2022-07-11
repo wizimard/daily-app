@@ -1,3 +1,6 @@
+.bg-none {
+    background: inherit;
+}
 .list-item {
     padding: 10px 20px;
 
@@ -18,7 +21,4 @@
     &:hover {
         background-color: #98B6D9;
     }
-}
-.bg-none {
-    background: inherit;
 }

@@ -56,14 +56,14 @@ const TaskToDo:React.FC<TaskToDoProps> = ({ id, content, todos, isDone, deepLeve
             </div>
             <div className="todo__actions">
                 {deepLevel < 4 && (
-                    <div className="img-container todo__add">
+                    <div className="img-container img-click todo__add">
                         <img src={AddBlack1xPng}
                             srcSet={`${AddBlack1xPng} 1x, ${AddBlack2xPng} 2x`}
                             alt="add"
                             onClick={handlerAddTodo} />
                     </div>
                 )}
-                <div className="img-container">
+                <div className="img-container img-click">
                     <img src={CloseBlack1xPng}
                         srcSet={`${CloseBlack1xPng} 1x, ${CloseBlack2xPng} 2x`}
                         alt="close"

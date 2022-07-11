@@ -5,6 +5,7 @@ import { IUser } from "../../models/IUser";
 interface UserState {
     email: string;
     username: string;
+    avatar?: string;
 };
 const initialState:UserState = {
     email: "",
@@ -20,7 +21,9 @@ export const userSlice = createSlice({
             state.username = action.payload.username;
         },
         userClear(state) {
-            state = initialState;
+            state.email = "";
+            state.username = "";
+            delete state.avatar;
         }
     }
 });

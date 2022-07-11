@@ -53,7 +53,7 @@ const DiaryEntry: React.FC = () => {
                 <>
                     <div className="entry__header">
                         <span className="entry__date">{activeEntry.date}</span>
-                        <div className="img-container entry__delete">
+                        <div className="img-container img-click entry__delete">
                             <img src={CloseBlackPng1x} 
                                  srcSet={`${CloseBlackPng1x} 1x, ${CloseBlackPng2x} 2x`} 
                                  onClick={handlerDeleteEntry} 

@@ -2,6 +2,9 @@ import React from "react";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
+import { systemSubmitModal } from "../../redux/reducers/SystemSlice";
+import { systemConstants } from "../../redux/constants/systemConstants";
+
 import TaskDateStart from "./TaskDateStart";
 import TaskDateEnd from "./TaskDateEnd";
 import TaskTitle from "./TaskTitle";
@@ -16,8 +19,6 @@ import DangerousPng from "../../assets/img/dangerous.png";
 import CriticalPng from "../../assets/img/critical.png";
 
 import "./TaskActive.scss";
-import { systemSubmitModal } from "../../redux/reducers/SystemSlice";
-import { systemConstants } from "../../redux/constants/systemConstants";
 
 const TaskActive:React.FC = () => {
 
@@ -56,7 +57,7 @@ const TaskActive:React.FC = () => {
                         )}
                     </div>
                     <div className="task__header--right">
-                        <div className="img-container">
+                        <div className="img-container img-click">
                             <img src={CloseBlack1xPng} 
                                  srcSet={`${CloseBlack1xPng} 1x, ${CloseBlack2xPng} 2x`}
                                  alt="close"

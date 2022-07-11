@@ -30,7 +30,7 @@ const TaskComments:React.FC = () => {
                 <div key={index} className="task__comment">
                     <div className="task__comment--header">
                         <span className="task__comment--date">({ comment.date })</span>
-                        <div className="img-container">
+                        <div className="img-container img-click">
                             <img src={CloseBlack1xPng}
                                  srcSet={`${CloseBlack1xPng} 1x, ${CloseBlack2xPng} 2x`}
                                  onClick={() => handlerOnDeleteComment(comment.id)}

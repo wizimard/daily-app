@@ -6,7 +6,7 @@ import { DiaryEntries, ContentScreen, DiaryEntry } from "../../components";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import { fetchEntries } from "../../redux/action-creator/EntryActionCreator";
-import { setActiveEntry } from "../../redux/reducers/EntrySlice";
+import { clearActiveEntry, setActiveEntry } from "../../redux/reducers/EntrySlice";
 
 import "./Diary.scss";
 
@@ -22,6 +22,7 @@ const Diary: React.FC = () => {
     useEffect(() => {
 
         (async() => {
+            await dispatch(clearActiveEntry());
             await dispatch(fetchEntries(0));
             await setIsLoaded(true);
         })();
