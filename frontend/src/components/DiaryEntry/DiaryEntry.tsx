@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { ThemeContext } from "../../themes/Themes";
+
+import { ContentScreen } from "../../ui";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
-import { setActiveEntry } from "../../redux/reducers/EntrySlice";
 import { systemSubmitModal } from "../../redux/reducers/SystemSlice";
-import { systemConstants } from "../../redux/constants/systemConstants";
-import { saveEntry } from "../../redux/action-creator/EntryActionCreator";
+import { clearActiveEntry } from "../../redux/reducers/EntrySlice";
+import { systemConstants } from "../../constants/systemConstants";
 
 import DiaryEntryContent from "./DiaryEntryContent";
 import DiaryEntryNotes from "./DiaryEntryNotes";
@@ -14,72 +17,77 @@ import DiaryEntryImages from "./DiaryEntryImages";
 import DiaryEntryTitle from "./DiaryEntryTitle";
 import DiaryEntryButtons from "./DiaryEntryButtons";
 
-import CloseBlackPng1x from "../../assets/img/close-black1x.png";
-import CloseBlackPng2x from "../../assets/img/close-black2x.png";
-
 import "./DiaryEntry.scss";
 
 const DiaryEntry: React.FC = () => {
 
-    const dispatch = useAppDispatch();
-
-    const activeEntry = useAppSelector(state => state.entryReducer.activeEntry);
-
     const navigate = useNavigate();
 
-    const handlerDeleteEntry = () => {
-        activeEntry && dispatch(systemSubmitModal({
-            type: systemConstants.DELETE_ENTRY,
-            id: activeEntry.id,
-            message: 'Are you sure you want to delete the entry?'
-        }));
-    }
+    const dispatch = useAppDispatch();
 
-    const handlerOnClickSave = () => {
-        if (activeEntry) {
-            const newId = dispatch(saveEntry(activeEntry));
-            Promise.resolve(newId).then(function(value) {
-                navigate(`/diary/${value}`);
-            });
+    const entryId = useAppSelector(state => state.entryReducer.activeEntry?.id);
+    const entryDate = useAppSelector(state => state.entryReducer.activeEntry?.date);
+
+    const { theme } = useContext(ThemeContext);
+
+    const handlerBack = useCallback(() => {
+
+        dispatch(clearActiveEntry());
+        navigate('/diary');
+
+    }, [dispatch, navigate]);
+
+    const handlerDeleteEntry = useCallback(() => {
+        if (!!entryId && entryId !== 'new') {
+            dispatch(systemSubmitModal({
+                type: systemConstants.DELETE_ENTRY,
+                id: entryId,
+                message: 'Are you sure you want to delete the entry?'
+            }));
+            return;
         }
-    }
-    const handlerOnClickCancel = () => {
-        activeEntry && dispatch(setActiveEntry(activeEntry.id));
-    }
+        handlerBack();
+    }, [dispatch, entryId, handlerBack]);
 
     return (
-        <>
-            {activeEntry ? (
-                <>
-                    <div className="entry__header">
-                        <span className="entry__date">{activeEntry.date}</span>
-                        <div className="img-container img-click entry__delete">
-                            <img src={CloseBlackPng1x} 
-                                 srcSet={`${CloseBlackPng1x} 1x, ${CloseBlackPng2x} 2x`} 
-                                 onClick={handlerDeleteEntry} 
-                                 alt="delete" />
+        <ContentScreen>
+        {!!entryId ? (
+            <>
+                <div className="entry__header">
+                    <div className="entry__header--left">
+                        <div className="img-container img-click entry__back">
+                            <img src={theme.img.back} 
+                                onClick={handlerBack}
+                                alt="back" />
                         </div>
+                        <span className="entry__date">{entryDate}</span>
                     </div>
-                    <div className="entry__title">
-                        <DiaryEntryTitle />
+                    <div className="img-container img-click entry__delete">
+                        <img src={theme.img.close.x1} 
+                                srcSet={`${theme.img.close.x1} 1x, ${theme.img.close.x2} 2x`} 
+                                onClick={handlerDeleteEntry} 
+                                alt="delete" />
                     </div>
-                    <div className="entry__block">
-                        <DiaryEntryContent />
-                    </div>
-                    <div className="entry__block">
-                        <DiaryEntryImages images={activeEntry.images} />
-                    </div>
-                    <div className="entry__block entry__notes">
-                        <span>#Notes</span>
-                        <DiaryEntryNotes />
-                    </div>
-                    <DiaryEntryButtons handlerOnClickSave={handlerOnClickSave}
-                                       handlerOnClickCancel={handlerOnClickCancel} />
-                </>
-            ) : (
-                <span>Here is empty!</span>
-            )}
-        </>
+                </div>
+                <div className="entry__title">
+                    <DiaryEntryTitle />
+                </div>
+                <div className="entry__block">
+                    <DiaryEntryContent />
+                </div>
+                <div className="entry__block">
+                    <DiaryEntryImages />
+                </div>
+                <div className="entry__block entry__notes">
+                    <span>#Notes</span>
+                    <DiaryEntryNotes />
+                </div>
+                <DiaryEntryButtons />
+            </>
+        ) : (
+            <span>Here is empty!</span>
+        )}
+        </ContentScreen>
     );
 }
 

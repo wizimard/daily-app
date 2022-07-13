@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import { changeEntryTitle } from "../../redux/reducers/EntrySlice";
 
-import TextareaElement from "../TextareaElement";
+import { TextareaElement } from "../../ui";
 
 const DiaryEntryTitle:React.FC = () => {
 

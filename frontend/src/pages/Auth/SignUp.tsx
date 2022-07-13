@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik, Form, Field  } from "formik";
+
+import { ThemeContext } from "../../themes/Themes";
 
 import { useAppDispatch } from "../../hooks/redux";
 
-import MailWhitePng1x from "../../assets/img/mail-white1x.png";
-import MailWhitePng2x from "../../assets/img/mail-white2x.png";
-import LockWhitePng1x from "../../assets/img/lock-white1x.png";
-import LockWhitePng2x from "../../assets/img/lock-white2x.png";
 import { userSignUp } from "../../redux/action-creator/UserActionCreator";
 
 const SignUp:React.FC = () => {
 
     const dispatch = useAppDispatch();
+
+    const { theme } = useContext(ThemeContext);
 
     const initialValues = { email: '', password: '', repeatPassword: '' };
 
@@ -62,8 +62,8 @@ const SignUp:React.FC = () => {
             <Form className="auth__form" onSubmit={handleSubmit}>
                 <div className="auth__input">
                     <div className="img-container auth__input--icon">
-                        <img src={MailWhitePng1x}
-                            srcSet={`${MailWhitePng1x} 1x, ${MailWhitePng2x} 2x`} 
+                        <img src={theme.img.mail.x1}
+                            srcSet={`${theme.img.mail.x1} 1x, ${theme.img.mail.x2} 2x`} 
                             alt="mail" />
                     </div>
                     <Field type="email"
@@ -79,8 +79,8 @@ const SignUp:React.FC = () => {
                 </div>
                 <div className="auth__input">
                     <div className="img-container auth__input--icon">
-                        <img src={LockWhitePng1x}
-                            srcSet={`${LockWhitePng1x} 1x, ${LockWhitePng2x} 2x`} 
+                        <img src={theme.img.lock.x1}
+                            srcSet={`${theme.img.lock.x1} 1x, ${theme.img.lock.x2} 2x`} 
                             alt="lock" />
                     </div>
                     <Field type="password"
@@ -96,8 +96,8 @@ const SignUp:React.FC = () => {
                 </div>
                 <div className="auth__input">
                     <div className="img-container auth__input--icon">
-                        <img src={LockWhitePng1x}
-                            srcSet={`${LockWhitePng1x} 1x, ${LockWhitePng2x} 2x`} 
+                        <img src={theme.img.lock.x1}
+                            srcSet={`${theme.img.lock.x1} 1x, ${theme.img.lock.x2} 2x`} 
                             alt="lock" />
                     </div>
                     <Field type="password"

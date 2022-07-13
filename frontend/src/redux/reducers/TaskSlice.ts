@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import { IComment, ITask, ITodo } from "../../models/ITask"
+import { ITask, ITodo } from "../../models/ITask"
 
 import { formatDate } from "../../utils/date";
 import { generateId } from "../../utils/id";
@@ -36,7 +36,7 @@ export const taskSlice = createSlice({
             }
             state.isAllFetching = true;
         },
-        setActiveTask(state, action: PayloadAction<string>) {
+        setActiveTask(state, action: PayloadAction<string | ITask>) {
             state.isChanged = false;
 
             if (action.payload === "new") {
@@ -47,20 +47,14 @@ export const taskSlice = createSlice({
                     title: '',
                     description: '',
                     todos: [],
-                    comments: [],
                     status: {
                         done: ''
                     }
                 }
                 return;
-            }
+            }            
 
-            for (let task of state.tasks) {
-                if (task.id === action.payload) {
-                    state.activeTask = JSON.parse(JSON.stringify(task));
-                    return;
-                }
-            }
+            state.activeTask = JSON.parse(JSON.stringify(action.payload));
         },
         clearActiveTask(state) {
             state.isChanged = false;
@@ -91,33 +85,6 @@ export const taskSlice = createSlice({
         changeTaskDateEnd(state, action: PayloadAction<string>) {
             if (state.activeTask) {
                 state.activeTask.date_end = formatDate(action.payload);
-
-                state.isChanged = true;
-            }
-        },
-        addTaskComment(state, action: PayloadAction<string>) {
-
-            if (action.payload) {
-                
-                const comment: IComment = {
-                    id: generateId(),
-                    date: formatDate(),
-                    content: action.payload,
-                    author: 'maxim'
-                }
-    
-                if (state.activeTask) {
-                    state.activeTask.comments = [...state.activeTask.comments, comment];
-    
-                    state.isChanged = true;
-                }
-            }
-        },
-        deleteTaskComment(state, action: PayloadAction<string>) {
-            if (state.activeTask) {
-                state.activeTask.comments = state.activeTask.comments.filter(
-                    comment => comment.id !== action.payload
-                );
 
                 state.isChanged = true;
             }
@@ -229,8 +196,6 @@ export const {
     changeTaskDescription,
     changeTaskDateStart,
     changeTaskDateEnd,
-    addTaskComment,
-    deleteTaskComment,
     addTaskToDo,
     deleteTaskTodo,
     changeStatusTaskTodo,

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import { changeEntryContent } from "../../redux/reducers/EntrySlice";
 
-import { TextareaElement } from '..';
+import { TextareaElement } from '../../ui';
 
 const DiaryEntryContent: React.FC = () => {
 

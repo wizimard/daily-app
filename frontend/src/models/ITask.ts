@@ -1,9 +1,3 @@
-export interface IComment {
-    id: string;
-    date: string;
-    content: string;
-    author: string;
-}
 export interface ITodo {
     id: string;
     content: string;
@@ -16,7 +10,6 @@ export interface ITask {
     date_end: string;
     title: string;
     description: string;
-    comments: IComment[];
     todos: ITodo[];
     status: {
         done: string;

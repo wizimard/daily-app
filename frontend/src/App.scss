@@ -3,6 +3,10 @@
     font-style: normal;
     src: local('Roboto'), url(./assets/fonts/Roboto-Regular.woff) format('woff');
 }
+.theme_dark {
+    background-color: #303A3D;
+    color: #fff;
+}
 html {
     font-family: 'Roboto';
     font-style: normal;

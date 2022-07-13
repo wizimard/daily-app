@@ -1,47 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { DiaryEntries, ContentScreen, DiaryEntry } from "../../components";
+import { DiaryEntries, DiaryEntry } from "../../components";
+
+import { LayoutPage } from '../../ui';
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
-import { fetchEntries } from "../../redux/action-creator/EntryActionCreator";
-import { clearActiveEntry, setActiveEntry } from "../../redux/reducers/EntrySlice";
-
-import "./Diary.scss";
+import { fetchEntries, fetchEntry } from "../../redux/action-creator/EntryActionCreator";
+import { clearActiveEntry } from "../../redux/reducers/EntrySlice";
 
 const Diary: React.FC = () => {
 
     const dispatch = useAppDispatch();
-    const diary = useAppSelector(state => state.entryReducer);
+    const entries = useAppSelector(state => state.entryReducer.entries);
 
     const entryId = useParams().id;
 
-    const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
     useEffect(() => {
 
-        (async() => {
-            await dispatch(clearActiveEntry());
-            await dispatch(fetchEntries(0));
-            await setIsLoaded(true);
-        })();
+        dispatch(clearActiveEntry());
+        dispatch(fetchEntries(0));
 
     }, [dispatch]);
 
     useEffect(() => {
 
-        if (entryId && isLoaded) dispatch(setActiveEntry(entryId));
+        if (entryId) dispatch(fetchEntry(entryId));
 
-    }, [dispatch, entryId, isLoaded]);
+    }, [dispatch, entryId]);
 
     return (
-        <div className="diary page-container">
-            <DiaryEntries entries={diary.entries} activeId={entryId} />
-            <ContentScreen>
+        <LayoutPage>
+            <div className="diary page-container">
+                <DiaryEntries entries={entries} activeId={entryId} />
                 <DiaryEntry />
-            </ContentScreen>
-        </div>
+            </div>
+        </LayoutPage>
     )
 }
 

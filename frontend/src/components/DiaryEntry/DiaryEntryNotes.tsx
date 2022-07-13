@@ -3,7 +3,7 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { changeEntryNotes } from "../../redux/reducers/EntrySlice";
 
-import TextareaElement from "../TextareaElement";
+import { TextareaElement } from "../../ui";
 
 const DiaryEntryNotes: React.FC = () => {
 

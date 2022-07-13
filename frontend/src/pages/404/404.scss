@@ -1,0 +1,39 @@
+.page-404 {
+    width: 100%;
+    height: 100%;
+
+    background-color: inherit;
+    color: inherit;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__conteiner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    &__title {
+        font-weight: 700;
+        font-size: 49px;
+        line-height: 59px;
+
+        text-align: center;
+    }
+    &__content {
+        width: 100%;
+        margin: 10px 0 7px 0;
+
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 27px;
+
+        text-align: center;
+
+        &:last-child {
+            margin: 0;
+        }
+    }
+}

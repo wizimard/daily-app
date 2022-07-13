@@ -1,65 +1,82 @@
-import React from "react";
+import React, { useCallback, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { ThemeContext } from "../../themes/Themes";
+
+import { ContentScreen } from "../../ui";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import { systemSubmitModal } from "../../redux/reducers/SystemSlice";
-import { systemConstants } from "../../redux/constants/systemConstants";
+import { clearActiveTask } from "../../redux/reducers/TaskSlice";
+
+import { systemConstants } from "../../constants/systemConstants";
 
 import TaskDateStart from "./TaskDateStart";
 import TaskDateEnd from "./TaskDateEnd";
 import TaskTitle from "./TaskTitle";
 import TaskDescription from "./TaskDescription";
-import TaskComments from "./TaskComments";
 import TaskToDos from "./TaskToDos";
 import TaskBtns from "./TaskBtns";
-
-import CloseBlack1xPng from "../../assets/img/close-black1x.png";
-import CloseBlack2xPng from "../../assets/img/close-black2x.png";
-import DangerousPng from "../../assets/img/dangerous.png";
-import CriticalPng from "../../assets/img/critical.png";
 
 import "./TaskActive.scss";
 
 const TaskActive:React.FC = () => {
 
+    const navigate = useNavigate();
+
     const dispatch = useAppDispatch();
+    
+    const activeTaskId = useAppSelector(state => state.task.activeTask?.id); 
+    const activeTaskStatus = useAppSelector(state => state.task.activeTask?.status);
 
-    const {activeTaskStatus, activeTaskId} = useAppSelector(state => ({
-        activeTaskStatus: state.task.activeTask?.status,
-        activeTaskId: state.task.activeTask?.id
-    }));
+    const { theme } = useContext(ThemeContext);
 
-    const handlerDeleteTask = () => {
-        if (activeTaskId) {
+    const handlerBack = useCallback(() => {
+
+        dispatch(clearActiveTask());
+        navigate('/task');
+
+    }, [dispatch, navigate]);
+    
+    const handlerDeleteTask = useCallback(() => {
+        if (!!activeTaskId && activeTaskId !== 'new') {
             dispatch(systemSubmitModal({
                 type: systemConstants.DELETE_TASK,
                 id: activeTaskId,
                 message: "Are you sure you want to delete the task?"
-            }))
+            }));
+            return;
         }
-    }
+        handlerBack();
+    }, [dispatch, activeTaskId, handlerBack]);
 
     return(
-        <>
+        <ContentScreen>
         {activeTaskStatus ? (
             <>
                 <div className="task__header">
                     <div className="task__header--left">
+                        <div className="img-container img-click task__back">
+                            <img src={theme.img.back} 
+                                onClick={handlerBack}
+                                alt="back" />
+                        </div>
                         <TaskDateStart /> - <TaskDateEnd />
                         {activeTaskStatus.status && (
                             <div className="img-container">
                                 {activeTaskStatus.status === 'dangerous' ? (
-                                    <img src={DangerousPng} alt="dangerous" />
+                                    <img src={theme.img.dangerous} alt="dangerous" />
                                 ) : (
-                                    <img src={CriticalPng} alt="critical" />
+                                    <img src={theme.img.critical} alt="critical" />
                                 )}
                             </div>
                         )}
                     </div>
                     <div className="task__header--right">
                         <div className="img-container img-click">
-                            <img src={CloseBlack1xPng} 
-                                 srcSet={`${CloseBlack1xPng} 1x, ${CloseBlack2xPng} 2x`}
+                            <img src={theme.img.close.x1} 
+                                 srcSet={`${theme.img.close.x1} 1x, ${theme.img.close.x2} 2x`}
                                  alt="close"
                                  onClick={handlerDeleteTask} />
                         </div>
@@ -74,16 +91,13 @@ const TaskActive:React.FC = () => {
                 <div className="task__block">
                     <TaskToDos />
                 </div>
-                <div className="task__block">
-                    <TaskComments />
-                </div>
                 <TaskBtns />
             </>
         ) : (
             <div>Here is empty</div>
         )}
-        </>
+        </ContentScreen>
     );
-}
+};
 
 export default TaskActive;

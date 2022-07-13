@@ -1,4 +1,4 @@
-import { systemConstants } from "../../redux/constants/systemConstants";
+import { systemConstants } from "../../constants/systemConstants";
 import { deleteEntry } from "../../redux/action-creator/EntryActionCreator";
 import { deleteTask } from "../../redux/action-creator/TaskActionCreator";
 

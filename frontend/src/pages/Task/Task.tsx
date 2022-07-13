@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { ContentScreen, TaskActive, TaskList } from "../../components";
+import { TaskActive, TaskList } from "../../components";
+
+import { LayoutPage } from '../../ui';
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { fetchTasks } from "../../redux/action-creator/TaskActionCreator";
-import { clearActiveTask, setActiveTask } from "../../redux/reducers/TaskSlice";
-
-import "./Task.scss";
+import { fetchTask, fetchTasks } from "../../redux/action-creator/TaskActionCreator";
+import { clearActiveTask } from "../../redux/reducers/TaskSlice";
 
 const Task:React.FC = () => {
 
@@ -17,31 +17,26 @@ const Task:React.FC = () => {
 
     const tasks = useAppSelector(state => state.task.tasks);
 
-    const [isLoaded, setIsLoaded] = useState(false);
-
     useEffect(() => {
 
-        (async() => {
-            await dispatch(clearActiveTask());
-            await dispatch(fetchTasks());
-            await setIsLoaded(true);
-        })();
+        dispatch(clearActiveTask());
+        dispatch(fetchTasks());
     
     }, [dispatch]);
 
     useEffect(() => {
 
-        if (taskId && isLoaded) dispatch(setActiveTask(taskId));
+        if (taskId) dispatch(fetchTask(taskId));
 
-    }, [dispatch, taskId, isLoaded]);
+    }, [dispatch, taskId]);
     
     return (
-        <div className="task page-container">
-            <TaskList tasks={tasks} activeItem={taskId || ""} />
-            <ContentScreen>
+        <LayoutPage>
+            <div className="task page-container">
+                <TaskList tasks={tasks} activeItem={taskId || ""} />
                 <TaskActive />
-            </ContentScreen>
-        </div>
+            </div>
+        </LayoutPage>
     );
 }
 

@@ -1,14 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 
-import ListItem from "../ListItem";
-import ListScreen from "../ListScreen";
+import { ThemeContext } from "../../themes/Themes";
+
+import { ListItem, ListScreen } from "../../ui";
 
 import { ITask } from "../../models/ITask";
-
-import addBlackImg1x from "../../assets/img/add-black1x.png";
-import addBlackImg2x from "../../assets/img/add-black2x.png";
-import DangerousPng from "../../assets/img/dangerous.png";
-import CriticalPng from "../../assets/img/critical.png";
 
 import "./TaskList.scss";
 
@@ -19,14 +15,16 @@ interface TaskListProps {
 
 const TaskList:React.FC<TaskListProps> = ({tasks, activeItem}) => {
 
+    const { theme } = useContext(ThemeContext);
+
     return (
         <ListScreen>
             <ListItem link="/task/new" addClass="list-item_new">
                 <div className="task-create-item">
                     <div className="task-create-item__content">
                         <div className="img-container task-create-item__img">
-                            <img src={addBlackImg1x} 
-                                 srcSet={`${addBlackImg1x} 1x, ${addBlackImg2x} 2x`}
+                            <img src={theme.img.add.x1} 
+                                 srcSet={`${theme.img.add.x1} 1x, ${theme.img.add.x2} 2x`}
                                  alt="add" />
                         </div>
                         <h3 className="task-create-item__text">Create a new task</h3>
@@ -49,9 +47,9 @@ const TaskList:React.FC<TaskListProps> = ({tasks, activeItem}) => {
                                     {task.status.status && (
                                         <>
                                         {task.status.status === 'dangerous' ? (
-                                            <img src={DangerousPng} alt="dangerous" />
+                                            <img src={theme.img.dangerous} alt="dangerous" />
                                         ) : (
-                                            <img src={CriticalPng} alt="critical" />
+                                            <img src={theme.img.critical} alt="critical" />
                                         )}
                                         </>
                                     )}

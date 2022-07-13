@@ -1,9 +1,9 @@
-import axios from "axios";
-
 import { AppDispatch } from "../store";
 
 import { systemFetch, systemFetchError, systemFetchSuccess } from "../reducers/SystemSlice";
-import { userSet } from "../reducers/UserSlice";
+import { userClear, userSet } from "../reducers/UserSlice";
+
+import { userSignInApi, userSignUpApi } from "../../api/userApi";
 
 export const userSignIn = (email: string, password: string) => {
     return async(dispatch: AppDispatch) => {
@@ -11,9 +11,7 @@ export const userSignIn = (email: string, password: string) => {
         dispatch(systemFetch());
 
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}users?email=${email}&password=${password}`);
-
-            const data = response.data;
+            const data = await userSignInApi(email, password);
     
             if (data && data.length > 0) {
                 dispatch(systemFetchSuccess());
@@ -35,34 +33,25 @@ export const userSignUp = (email: string, password: string) => {
         dispatch(systemFetch());
 
         try {
-            const check = await axios.get(`${process.env.REACT_APP_BACKEND_URL}users?email=${email}`);
-
-            const checkData = check.data;
     
-            if (checkData && checkData.length > 0) {
-                dispatch(systemFetchError("Email is busy!"));
-                return;
-            }
+            const data = await userSignUpApi(email, password);
     
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}users`, {
-                email,
-                password,
-                username: email
-            });
-    
-            const data = response.data;
-    
-            if (data) {
+            if (data.status === "ok") {
                 dispatch(systemFetchSuccess());
 
-                dispatch(userSet(data));
-
-                return;
+                dispatch(userSet(data.data));
             }
-            dispatch(systemFetchError("Authentication error!"));
+            if (data.status === "error") {
+                dispatch(systemFetchError(data.error ?? ''));
+            }
 
         } catch (e) {
             dispatch(systemFetchError("Error!"));
         }
+    }
+}
+export const userLogout = () => {
+    return async(dispatch: AppDispatch) => {
+        dispatch(userClear);        
     }
 }

@@ -17,6 +17,12 @@
       "password": "user5",
       "username": "user5@user.ru",
       "id": "OqCO-zR"
+    },
+    {
+      "email": "maxim@user.ru",
+      "password": "maxim2517",
+      "username": "maxim@user.ru",
+      "id": "qnpkPS8"
     }
   ],
   "entries": [
@@ -28,10 +34,7 @@
       "images": [
         "https://media.istockphoto.com/photos/hot-air-balloons-flying-over-the-botan-canyon-in-turkey-picture-id1297349747?b=1&k=20&m=1297349747&s=170667a&w=0&h=oH31fJty_4xWl_JQ4OIQWZKP8C6ji9Mz7L4XmEnbqRU="
       ],
-      "notes": [
-        "#happy",
-        "#holiday"
-      ]
+      "notes": "#happy, #holiday"
     },
     {
       "id": "2",
@@ -48,18 +51,15 @@
         "https://thumbs.dreamstime.com/b/fond-de-coeur-d-amour-d-arc-en-ciel-60045149.jpg",
         "https://i.pinimg.com/originals/29/75/25/297525c915185bc830b944c39a0492e7.jpg"
       ],
-      "notes": [
-        "#happy",
-        "#holiday"
-      ]
+      "notes": "#happy, #holiday"
     }
   ],
   "task": [
     {
       "id": "1",
-      "date_start": "Sun Jan 22 2017 00:00:00 GMT+0600 (Омск, стандартное время)",
-      "date_end": "Sun Feb 12 2017 00:00:00 GMT+0600 (Омск, стандартное время)",
-      "title": "Build and deploy react app",
+      "date_start": "22 January 2017",
+      "date_end": "12 February 2017",
+      "title": "Build and deploy react application",
       "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
       "comments": [
         {
@@ -108,7 +108,11 @@
           ],
           "isDone": false
         }
-      ]
+      ],
+      "status": {
+        "done": "2/6",
+        "status": "critical"
+      }
     },
     {
       "id": "2",
@@ -136,7 +140,7 @@
               "isDone": true
             }
           ],
-          "isDone": false
+          "isDone": true
         },
         {
           "id": "9",
@@ -146,7 +150,7 @@
               "id": "10",
               "content": "Prepare the kitchen",
               "todos": [],
-              "isDone": false
+              "isDone": true
             },
             {
               "id": "11",
@@ -155,11 +159,11 @@
               "isDone": true
             }
           ],
-          "isDone": false
+          "isDone": true
         }
       ],
       "status": {
-        "done": "2/5",
+        "done": "5/5",
         "status": "critical"
       }
     }

@@ -1,13 +1,11 @@
-import React from "react";
+import React, { memo, useContext } from "react";
 
-import ListItem from "../ListItem";
-import ListScreen from "../ListScreen";
+import { ThemeContext } from "../../themes/Themes";
+
+import { ListItem, ListScreen } from "../../ui";
 
 import { IEntry } from "../../models/IEntry";
 import { formatDate } from "../../utils/date";
-
-import addBlackImg1x from '../../assets/img/add-black1x.png';
-import addBlackImg2x from '../../assets/img/add-black2x.png';
 
 import './DiaryEntries.scss';
 
@@ -16,7 +14,9 @@ interface DiaryEntriesProps {
     activeId: string | undefined;
 }
 
-const DiaryEntries: React.FC<DiaryEntriesProps> = ({ entries, activeId }) => {
+const DiaryEntries: React.FC<DiaryEntriesProps> = memo(({ entries, activeId }) => {
+
+    const { theme } = useContext(ThemeContext);
 
     return (
         <ListScreen>
@@ -25,8 +25,8 @@ const DiaryEntries: React.FC<DiaryEntriesProps> = ({ entries, activeId }) => {
                     <span className="diary-create-entry__date">{formatDate()}</span>
                     <div className="diary-create-entry__content">
                         <div className="img-container diary-create-entry__img">
-                            <img src={addBlackImg1x} 
-                                 srcSet={`${addBlackImg1x} 1x, ${addBlackImg2x} 2x`}
+                            <img src={theme.img.add.x1} 
+                                 srcSet={`${theme.img.add.x1} 1x, ${theme.img.add.x2} 2x`}
                                  alt="add" />
                         </div>
                         <h3 className="diary-create-entry__text">Create a new entry</h3>
@@ -40,7 +40,7 @@ const DiaryEntries: React.FC<DiaryEntriesProps> = ({ entries, activeId }) => {
                                   addClass={activeId === entry.id ? "list-item_active" : ""}>
                             <div className="diary-entry__left">
                                 <div className="img-container diary-entry__img">
-                                    <img src={entry.images[0] || 'https://play-lh.googleusercontent.com/kEvCkfWu-Ijx7beQ4RCNPjZGKcY9vf2XSfHlBvpOjs9CFPTWPFubia_YbYMaW2cJyQDR'} alt="1" />
+                                    <img src={entry.images[0] || theme.img.diaryDefault} alt="1" />
                                 </div>
                             </div>
                             <div className="diary-entry__right">
@@ -54,6 +54,6 @@ const DiaryEntries: React.FC<DiaryEntriesProps> = ({ entries, activeId }) => {
             </ul>
         </ListScreen>
     );
-}
+});
 
 export default DiaryEntries;

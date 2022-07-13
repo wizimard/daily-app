@@ -1,7 +1,8 @@
 import React from "react";
 
 import { useAppSelector } from "../../hooks/redux";
-import { systemConstants } from "../../redux/constants/systemConstants";
+
+import { systemConstants } from "../../constants/systemConstants";
 
 import ModalError from "./ModalError";
 import ModalSubmit from "./ModalSubmit";

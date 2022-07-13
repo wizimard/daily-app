@@ -1,7 +1,8 @@
 import React from "react";
 
-import Spinner from "../Spinner";
 import ModalComponent from "../ModalComponent";
+
+import { Spinner } from "../../ui";
 
 import { useAppSelector } from "../../hooks/redux";
 

@@ -14,18 +14,20 @@ const Auth: React.FC = () => {
     }
 
     return (
-        <div className="auth">
-            <h1 className="auth__title">{isSignIn ? "Sign In" : "Sign Up"}</h1>
-            {isSignIn ? (
-                <SignIn />
-            ) : (
-                <SignUp />
-            )}
-            {isSignIn ? (
-                <span className="auth__switch">Don't have an account? <a onClick={handlerOnChangeAuthMode}>Sign Up</a></span>
-            ) : (
-                <span className="auth__switch">Have an account? <a onClick={handlerOnChangeAuthMode}>Sign In</a></span>
-            )}
+        <div className="auth-container">
+            <div className="auth">
+                <h1 className="auth__title">{isSignIn ? "Sign In" : "Sign Up"}</h1>
+                {isSignIn ? (
+                    <SignIn />
+                ) : (
+                    <SignUp />
+                )}
+                {isSignIn ? (
+                    <span className="auth__switch">Don't have an account? <a onClick={handlerOnChangeAuthMode}>Sign Up</a></span>
+                ) : (
+                    <span className="auth__switch">Have an account? <a onClick={handlerOnChangeAuthMode}>Sign In</a></span>
+                )}
+            </div>
         </div>
     )
 }

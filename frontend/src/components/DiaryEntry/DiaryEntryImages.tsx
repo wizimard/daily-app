@@ -1,15 +1,14 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 
-import AddImg1x from "../../assets/img/add-black1x.png";
-import AddImg2x from "../../assets/img/add-black2x.png";
-import DeleteImg1x from "../../assets/img/close-black1x.png";
-import DeleteImg2x from "../../assets/img/close-black2x.png";
+import { useAppSelector } from "../../hooks/redux";
 
-interface DiaryEntryImagesProps {
-    images: string[];
-}
+import { ThemeContext } from "../../themes/Themes";
 
-const DiaryEntryImages: React.FC<DiaryEntryImagesProps> = ({images}) => {
+const DiaryEntryImages: React.FC = () => {
+
+    const { theme } = useContext(ThemeContext);
+
+    const images = useAppSelector(state => state.entryReducer.activeEntry?.images) ?? [];
 
     const [currentImages, setCurrentImages] = useState<string[]>(images);
 
@@ -44,18 +43,20 @@ const DiaryEntryImages: React.FC<DiaryEntryImagesProps> = ({images}) => {
                     <div className="img-container entry__image">
                         <img src={image} alt={index.toString()} />
                         <div className="img-container entry__image--delete">
-                            <img src={DeleteImg1x}
-                                 srcSet={`${DeleteImg1x} 1x, ${DeleteImg2x} 2x`} 
+                            <img src={theme.img.close.x1}
+                                 srcSet={`${theme.img.close.x1} 1x, ${theme.img.close.x1} 2x`} 
                                  alt="delete" />
                         </div>
                     </div>
                 </li>
             ))}
             <div className="entry__images--add">
-                <label className="add-image img-container">
-                    <img src={AddImg1x}
-                         srcSet={`${AddImg1x} 1x, ${AddImg2x} 2x`} 
-                         alt="add" />
+                <label className="add-image">
+                    <div className="img-container">
+                        <img src={theme.img.add.x1}
+                            srcSet={`${theme.img.add.x1} 1x, ${theme.img.add.x2} 2x`} 
+                            alt="add" />
+                    </div>
                     <input className="add-image__input" 
                            type="file"
                            multiple

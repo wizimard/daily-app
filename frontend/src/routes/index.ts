@@ -1,28 +1,41 @@
-import { Diary, Auth, Task } from "../pages";
+import React from 'react';
+
+const AuthElement = React.lazy(() => import('../pages/Auth'));
+const DiaryElement = React.lazy(() => import('../pages/Diary'));
+const TaskElement = React.lazy(() => import('../pages/Task'));
+const Page404Element = React.lazy(() => import('../pages/404'));
 
 export const routes = {
     "public": [
         {
             "path": "/auth",
-            "element": Auth
+            "element": AuthElement
+        },
+        {
+            "path": "/404",
+            "element": Page404Element
         }
     ],
     "private": [
         {
             "path": "/diary",
-            "element": Diary
+            "element": DiaryElement
         },
         {
             "path": "/diary/:id",
-            "element": Diary
+            "element": DiaryElement
         },
         {
             "path": "/task",
-            "element": Task
+            "element": TaskElement
         },
         {
             "path": "/task/:id",
-            "element": Task
+            "element": TaskElement
+        },
+        {
+            "path": "/404",
+            "element": Page404Element
         }
     ],
     "redirect": {

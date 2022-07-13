@@ -1,10 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Button } from "../../ui";
+
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { saveTask } from "../../redux/action-creator/TaskActionCreator";
 import { setActiveTask } from "../../redux/reducers/TaskSlice";
-import Button from "../Button";
 
 const TaskBtns:React.FC = () => {
 

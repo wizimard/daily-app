@@ -19,11 +19,13 @@ body, #root, .App {
 .App {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 .page-container {
     width: 85.4%;
     height: 100%;
+
+    position: relative;
 
     display: flex;
 }
@@ -55,5 +57,33 @@ ul, li {
     &:hover, &:focus {
         border-radius: 50%;
         background-color: #86ADEE;
+    }
+}
+
+@media (max-width: 1000px) {
+    html {
+        font-size: 16px;
+    }
+    .page-container {
+        width: 80%;
+    }
+    .list-screen, .content-screen {
+        width: 100%;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        background-color: #fff;
+
+        .theme_dark & {
+            background-color: #303A3D;
+        }
+    }
+    .list-screen {
+        z-index: 5;
+    }
+    .content-screen {
+        z-index: 10;
     }
 }

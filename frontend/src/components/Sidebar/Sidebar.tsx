@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+
+import { ThemeContext } from "../../themes/Themes";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import { userClear } from "../../redux/reducers/UserSlice";
 
 import Menu from "./Menu";
-
-import AvatarPng from "../../assets/img/avatar.png";
-import LogoutSvg from "../../assets/img/logout.svg";
 
 import './Sidebar.scss';
 
@@ -16,9 +15,14 @@ const Sidebar: React.FC = () => {
     const dispatch = useAppDispatch();
 
     const user = useAppSelector(state => state.user);
+
+    const { theme, switchTheme } = useContext(ThemeContext);
     
     const handlerLogout = () => {
         dispatch(userClear());
+    }
+    const handlerSwitchTheme = () => {
+        switchTheme();
     }
 
     return (
@@ -28,15 +32,21 @@ const Sidebar: React.FC = () => {
                     {user.avatar ? (
                         <img src={user.avatar} alt="avatar" />
                     ) : (
-                        <img src={AvatarPng} alt="avatar" />
+                        <img src={theme.img.avatar} alt="avatar" />
                     )}
                 </div>
             </div>
             <Menu />
             <div className="sidebar__footer">
-                <div className="img-container img-click sidebar__logout"
-                    onClick={handlerLogout}>
-                    <img src={LogoutSvg} alt="logout" />
+                <div className="img-container img-click sidebar__theme">
+                    <img src={theme.img.theme} 
+                        onClick={handlerSwitchTheme} 
+                        alt="theme" />
+                </div>
+                <div className="img-container img-click sidebar__logout">
+                    <img src={theme.img.logout}
+                        onClick={handlerLogout} 
+                        alt="logout" />
                 </div>
             </div>
         </div>

@@ -1,5 +1,4 @@
 .entry {
-
     &__header {
         width: 100%;
         padding-bottom: 18px;
@@ -7,11 +6,26 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        &--left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    &__back {
+        display: none !important;
+
+        margin-right: 10px;
+
+        @media (max-width: 1000px) {
+            display: flex !important;
+        }
     }
     &__date {
         font-weight: 400;
-        font-size: 18px;
-        line-height: 21px;
+        font-size: 1em;
+        line-height: 1.2em;
     }
     &__delete {
         width: 24px;
@@ -27,8 +41,8 @@
         & textarea {
             margin-bottom: 10px;
         
-            font-size: 24px;
-            line-height: 28px;
+            font-size: 1.4em;
+            line-height: 1.6em;
         
             text-align: center;
         }
@@ -51,8 +65,8 @@
         border: none;
         background: none;
 
-        font-size: 18px;
-        line-height: 21px;
+        font-size: 1em;
+        line-height: 1.2em;
     }
     &__images {
         width: 100%;
@@ -75,10 +89,20 @@
             border-radius: 10px;
 
             cursor: pointer;
+
+            .theme_dark & {
+                background-color: inherit;
+                border: 2px solid #fff;
+            }
+
+            &:hover {
+                background-color: #98B6D9;
+            }
         }
         & li {
             width: 100px;
             height: 100px;
+
             display: flex;
             align-items: center;
             justify-content: center;
@@ -105,6 +129,10 @@
             border-radius: 50%;
 
             visibility: hidden;
+
+            .theme_dark & {
+                border: 1px solid #fff;
+            }
         }
         &:hover {
             .entry__image--delete {
@@ -118,8 +146,8 @@
         align-items: flex-start;
 
         & span, & textarea {
-            font-size: 20px;
-            line-height: 23px;
+            font-size: 1.1em;
+            line-height: 1.25em;
         }
         & textarea {
             width: 100%;
@@ -142,6 +170,13 @@
     }
 }
 .add-image {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
     cursor: pointer;
 
     &__input {

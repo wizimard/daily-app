@@ -1,7 +1,9 @@
 import React from "react";
+
+import { TextareaElement } from "../../ui";
+
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { changeTaskDescription } from "../../redux/reducers/TaskSlice";
-import TextareaElement from "../TextareaElement";
 
 const TaskDescription:React.FC = () => {
 

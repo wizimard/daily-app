@@ -1,51 +1,68 @@
-import axios from "axios";
-
 import { AppDispatch } from "../store";
 
 import { systemFetch, systemFetchError, systemFetchSuccess } from "../reducers/SystemSlice";
-import { taskFetchingSucces, taskSlice } from "../reducers/TaskSlice";
+import { setActiveTask, taskFetchingSucces, taskSlice } from "../reducers/TaskSlice";
 
-import { formatDate } from "../../utils/date";
+import { addTaskApi, deleteTaskApi, fetchTaskApi, fetchTasksApi, updateTaskApi } from "../../api/taskApi";
+
 import { getTaskStatus } from "../../utils/task";
 
 import { ITask } from "../../models/ITask";
+import { requestStatus } from "../../constants/requestConstants";
 
 export const fetchTasks = () => {
     return async(dispatch: AppDispatch) => {
         try {
             dispatch(systemFetch());
             
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}task`);
+            const data = await fetchTasksApi();
 
-            const data = (await response).data;
+            if (data.status === requestStatus.OK) {
 
-            if (data) {
-
-                data.forEach((item: ITask) => {
-                    item.status = getTaskStatus(item.date_start, item.date_end, item.todos);
-
-                    item.date_start = formatDate(item.date_start);
-                    item.date_end = formatDate(item.date_end);
-
-                    item.comments.forEach(comment => {
-                        comment.date = formatDate(comment.date);
-                    })
-                });
-
-                dispatch(taskFetchingSucces(data));
-
-                dispatch(systemFetchSuccess());
+                dispatch(taskFetchingSucces(data.tasks));
             }
+
+            dispatch(systemFetchSuccess());
 
         } catch (e) {
             dispatch(systemFetchError("Error when trying to load tasks!"));
         }
     }
 };
+export const fetchTask = (id: string) => {
+    return async(dispatch: AppDispatch) => {
+        dispatch(systemFetch());
+
+        try {
+
+            if (id === 'new') {
+                dispatch(setActiveTask(id));
+                dispatch(systemFetchSuccess());
+                return;
+            }
+
+            const data = await fetchTaskApi(id);            
+
+            if (data.status === requestStatus.OK) {
+                dispatch(setActiveTask(data.task));
+            }
+            dispatch(systemFetchSuccess());
+
+        } catch(e) {
+            dispatch(systemFetchError('Error when trying to load the task!'));
+        }
+    }
+}
 export const saveTask = (task: ITask) => {
     return async(dispatch: AppDispatch) => {
+        dispatch(systemFetch());
+
+        if (!task.todos || !task.todos.length) {
+            dispatch(systemFetchError('No data!'));
+            return;
+        }
+
         try {
-            dispatch(systemFetch());
 
             const saveTask = {
                 ...task,
@@ -57,28 +74,17 @@ export const saveTask = (task: ITask) => {
             }
 
             if (saveTask.id === "new") {
-                saveTask.id = "";
 
-                const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}task`, {
-                    ...saveTask
-                });
+                const data = await addTaskApi(saveTask);
 
-                const data = (await response).data;
-
-                if (data) {
-                    console.log(data);
-                    
-                    dispatch(taskSlice.actions.addTask(data));
+                if (data.status === requestStatus.OK) {
+                    dispatch(taskSlice.actions.addTask(data.task));
                     dispatch(systemFetchSuccess());
-                    return data.id;
+                    return data.task.id;
                 }
 
             } else {
-                const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}task/${saveTask.id}`, {
-                    ...saveTask
-                });
-
-                const data = response.data;
+                const data = await updateTaskApi(saveTask);
 
                 if (data) {
                     dispatch(taskSlice.actions.saveTask(saveTask));
@@ -98,11 +104,14 @@ export const deleteTask = (id: string) => {
         try {
             dispatch(systemFetch());
 
-            await axios.delete(`${process.env.REACT_APP_BACKEND_URL}task/${id}`);
+            const data = await deleteTaskApi(id);
 
-            dispatch(taskSlice.actions.deleteTask(id));
+            if (data.status === requestStatus.OK) {
 
-            dispatch(taskSlice.actions.clearActiveTask());
+                dispatch(taskSlice.actions.deleteTask(id));
+    
+                dispatch(taskSlice.actions.clearActiveTask());
+            }
 
             dispatch(systemFetchSuccess());
 

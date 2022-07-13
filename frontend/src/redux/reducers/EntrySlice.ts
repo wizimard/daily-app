@@ -6,8 +6,6 @@ import { formatDate } from "../../utils/date";
 interface EntryState {
     entries: IEntry[];
     activeEntry: IEntry | null;
-    isLoading: boolean;
-    error: string;
     isChangedEntry: boolean;
     isAllFetching: boolean;
 }
@@ -15,8 +13,6 @@ interface EntryState {
 const initialState: EntryState = {
     entries: [],
     activeEntry: null,
-    isLoading: false,
-    error: '',
     isChangedEntry: false,
     isAllFetching: false
 }
@@ -25,12 +21,7 @@ export const entrySlice = createSlice({
     name: 'entry',
     initialState,
     reducers: {
-        entriesFetching(state) {
-            state.isLoading = true;
-        },
-        entriesFetchingSuccess(state, action: PayloadAction<IEntry[]>) {
-            state.isLoading = false;
-            state.error = '';
+        setEntries(state, action: PayloadAction<IEntry[]>) {
 
             if (action.payload && action.payload.length > 0) {
                 for (let entry of state.entries) {
@@ -44,18 +35,14 @@ export const entrySlice = createSlice({
             }
             state.isAllFetching = true;
         },
-        entriesFetchingError(state, action: PayloadAction<string>) {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
-        setActiveEntry(state, action: PayloadAction<string>) {
-            state.isChangedEntry = false;
+        setActiveEntry(state, action: PayloadAction<IEntry | string>) {
+            state.isChangedEntry = false;            
 
             if (action.payload === "new") {
                 state.activeEntry = {
                     "id": "new",
                     "date": formatDate((new Date()).toString()),
-                    "title": "",
+                    "title": '',
                     "content": "",
                     "images": [],
                     "notes": "",
@@ -63,9 +50,7 @@ export const entrySlice = createSlice({
                 return;
             }
 
-            state.activeEntry = JSON.parse(JSON.stringify(
-                state.entries.filter(entry => entry.id === action.payload)[0] || null
-            ));
+            state.activeEntry = JSON.parse(JSON.stringify(action.payload));
         },
         clearActiveEntry(state) {
             state.activeEntry = null;
@@ -95,7 +80,7 @@ export const entrySlice = createSlice({
                 state.isChangedEntry = true;
             }
         },
-        saveEntry(state, action: PayloadAction<IEntry>) {
+        updateEntry(state, action: PayloadAction<IEntry>) {
             const entries = state.entries;
 
             for (let i = 0; i < entries.length; i++) {
@@ -111,7 +96,7 @@ export const entrySlice = createSlice({
 
             state.isChangedEntry = false;
         },
-        deleteEntry(state, action: PayloadAction<string>) {
+        removeEntry(state, action: PayloadAction<string>) {
             state.activeEntry = null;
 
             state.entries = state.entries.filter(entry => entry.id !== action.payload);
@@ -121,11 +106,15 @@ export const entrySlice = createSlice({
     }
 });
 
-export const { setActiveEntry,
+export const { setEntries,
+               setActiveEntry,
                clearActiveEntry,
                changeEntryContent,
                changeEntryImages,
                changeEntryNotes,
-               changeEntryTitle } = entrySlice.actions;
+               changeEntryTitle,
+               addEntry,
+               updateEntry,
+               removeEntry } = entrySlice.actions;
 
 export default entrySlice.reducer;

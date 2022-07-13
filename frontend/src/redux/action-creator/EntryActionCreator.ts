@@ -1,32 +1,55 @@
-import axios from 'axios';
-
 import { AppDispatch } from "../store";
 
-import { entrySlice } from '../reducers/EntrySlice';
+import { addEntry, removeEntry, setActiveEntry, setEntries, updateEntry } from '../reducers/EntrySlice';
 import { systemFetch, systemFetchError, systemFetchSuccess } from '../reducers/SystemSlice';
+
+import { deleteEntryApi, fetchEntriesApi, fetchEntryApi, addEntryApi, updateEntryApi } from '../../api/entryApi';
 
 import { formatDate } from '../../utils/date';
 
 import { IEntry } from '../../models/IEntry';
+import { requestStatus } from "../../constants/requestConstants";
 
 export const fetchEntries = (currentCount: number) => async(dispatch: AppDispatch) => {
     dispatch(systemFetch());
 
     try {
-        const response = await axios.get(`http://localhost:3004/entries?_page=${currentCount / 5 + 1}&_limit=5`);
-        const entries = response.data;
+        const data = await fetchEntriesApi();
 
-        entries.forEach((entry: any) => {
-            entry.date = formatDate(entry.date);
-            entry.notes = entry.notes.join(', ');
-        });
+        if (data.status === requestStatus.OK) {
 
-        dispatch(entrySlice.actions.entriesFetchingSuccess(entries));
+            dispatch(setEntries(data.entries));
+        }
 
         dispatch(systemFetchSuccess());
 
-    } catch (e) {
+    } catch (e) {        
         dispatch(systemFetchError("Error when trying to load entries!"));
+    }
+}
+export const fetchEntry = (id: string) => {
+    return async(dispatch: AppDispatch) => {
+        dispatch(systemFetch());
+
+        try {
+
+            if (id === 'new') {
+                dispatch(setActiveEntry(id));
+                dispatch(systemFetchSuccess());
+                return;
+            }
+
+            const data = await fetchEntryApi(id);            
+
+            if (data.status === requestStatus.OK) {
+                dispatch(setActiveEntry(data.entry));            
+            }
+
+            dispatch(systemFetchSuccess());
+
+        } catch(e) {            
+            dispatch(systemFetchError('Error when trying to load entry!'));
+        }
     }
 }
 export const saveEntry = (entry: IEntry) => async(dispatch: AppDispatch) => {
@@ -35,33 +58,25 @@ export const saveEntry = (entry: IEntry) => async(dispatch: AppDispatch) => {
     try {
         const entrySave = JSON.parse(JSON.stringify(entry));
 
+        if (!entrySave.title) entrySave.title = formatDate();
+
         if (entrySave.id === "new") {
 
-            delete entrySave.id;
+            const data = await addEntryApi(entrySave);
 
-            const response = axios.post(`${process.env.REACT_APP_BACKEND_URL}entries`, {
-                ...entrySave
-            });
-
-            const data = (await response).data;
-
-            if (data) {
-                dispatch(entrySlice.actions.addEntry(data));
+            if (data.status === requestStatus.OK) {
+                dispatch(addEntry(data.entry));
 
                 dispatch(systemFetchSuccess());
 
-                return data.id;
+                return data.entry.id;
             }
         }
 
-        const response = axios.put(`${process.env.REACT_APP_BACKEND_URL}entries/${entrySave.id}`, {
-            ...entrySave
-        });
+        const data = await updateEntryApi(entrySave);
 
-        const data = (await response).data
-
-        if (data) {
-            dispatch(entrySlice.actions.saveEntry(entrySave));
+        if (data.status === requestStatus.OK) {
+            dispatch(updateEntry(data.entry));
 
             dispatch(systemFetchSuccess());
 
@@ -78,9 +93,9 @@ export const deleteEntry = (id: string) => {
 
         try {
 
-            await axios.delete(`${process.env.REACT_APP_BACKEND_URL}entries/${id}`);
+            await deleteEntryApi(id);
 
-            dispatch(entrySlice.actions.deleteEntry(id));
+            dispatch(removeEntry(id));
 
             dispatch(systemFetchSuccess());
 

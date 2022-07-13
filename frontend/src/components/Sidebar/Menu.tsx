@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import DiaryIconSvg from "../../assets/img/diary-icon.svg";
-import TaskIconSvg from "../../assets/img/task-icon.svg";
+import { ThemeContext } from "../../themes/Themes";
 
 const Menu:React.FC = () => {
 
     const pathname = useLocation().pathname;
     const navigate = useNavigate();
+
+    const { theme } = useContext(ThemeContext);
 
     const [activePage, setActivePage] = useState("");
 
@@ -27,22 +28,24 @@ const Menu:React.FC = () => {
     }, [pathname]);
     
     return(
-        <div className="menu">
-            <div className={`menu__item ${activePage === "diary" ? 'menu__item_active' : ''}`}
-                onClick={handlerOnClickDiary}>
-                <div className="img-container menu__item--img">
-                    <img src={DiaryIconSvg} alt="diary" />
-                </div>
-                <span className="menu__item--text">Diary</span>
-            </div>
-            <div className={`menu__item ${activePage === "task" ? 'menu__item_active' : ''}`}
-                onClick={handlerOnClickTask}>
-                <div className="img-container menu__item--img">
-                    <img src={TaskIconSvg} alt="task" />
-                </div>
-                <span className="menu__item--text">Tasks</span>
-            </div>
-        </div>
+        <nav className="menu">
+            <ul>
+                <li className={`menu__item ${activePage === "diary" ? 'menu__item_active' : ''}`}
+                    onClick={handlerOnClickDiary}>
+                    <div className="img-container menu__item--img">
+                        <img src={theme.img.diary} alt="diary" />
+                    </div>
+                    <span className="menu__item--text">Diary</span>
+                </li>
+                <li className={`menu__item ${activePage === "task" ? 'menu__item_active' : ''}`}
+                    onClick={handlerOnClickTask}>
+                    <div className="img-container menu__item--img">
+                        <img src={theme.img.task} alt="task" />
+                    </div>
+                    <span className="menu__item--text">Tasks</span>
+                </li>
+            </ul>
+        </nav>
     );
 }
 

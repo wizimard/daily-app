@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-import { systemConstants } from "../constants/systemConstants";
+import { systemConstants } from "../../constants/systemConstants";
 
 interface ModalPropsError {
     message: string;

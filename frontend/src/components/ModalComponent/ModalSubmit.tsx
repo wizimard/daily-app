@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { systemHideModal } from "../../redux/reducers/SystemSlice";
 
-import Spinner from "../Spinner";
+import { Spinner } from "../../ui";
 
 import { functionsSubmitted } from "./functionsSubmitted";
 

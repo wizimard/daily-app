@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Calendar from "../Calendar";
+import { Calendar } from "../../ui";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { changeTaskDateEnd } from "../../redux/reducers/TaskSlice";
@@ -23,7 +23,7 @@ const TaskDateEnd:React.FC = () => {
     }
 
     return (
-        <span className="task__date" onClick={handlerShowCalendar}>
+        <span className="task__date task__date--end" onClick={handlerShowCalendar}>
             {dateEnd}
             {isShow && <Calendar selectedDate={new Date()} handlerSelectDate={handlerSelectDate} />}
         </span>
