@@ -20,7 +20,7 @@ const Diary: React.FC = () => {
     useEffect(() => {
 
         dispatch(clearActiveEntry());
-        dispatch(fetchEntries(0));
+        dispatch(fetchEntries());
 
     }, [dispatch]);
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ThemeContext } from "../../themes/Themes";
 
-import { ContentScreen } from "../../ui";
+import { ContentScreen, EmptyScreen } from "../../ui";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
@@ -94,7 +94,7 @@ const TaskActive:React.FC = () => {
                 <TaskBtns />
             </>
         ) : (
-            <div>Here is empty</div>
+            <EmptyScreen />
         )}
         </ContentScreen>
     );

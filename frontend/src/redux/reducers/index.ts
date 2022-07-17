@@ -1,13 +1,13 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
 import systemReducer from "./SystemSlice";
-import userReducer from "./UserSlice";
+import authReducer from "./AuthSlice";
 import entryReducer from './EntrySlice';
 import taskReducer from './TaskSlice';
 
 export const rootReducer = combineReducers({
     system: systemReducer,
-    user: userReducer,
+    auth: authReducer,
     entryReducer,
     task: taskReducer
 });

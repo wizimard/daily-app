@@ -1,26 +1,20 @@
 import { AppDispatch } from "../store";
 
 import { systemFetch, systemFetchError, systemFetchSuccess } from "../reducers/SystemSlice";
-import { setActiveTask, taskFetchingSucces, taskSlice } from "../reducers/TaskSlice";
+import { addTask, setActiveTask, taskFetchingSucces, taskSlice, updateTask } from "../reducers/TaskSlice";
 
 import { addTaskApi, deleteTaskApi, fetchTaskApi, fetchTasksApi, updateTaskApi } from "../../api/taskApi";
 
-import { getTaskStatus } from "../../utils/task";
-
 import { ITask } from "../../models/ITask";
-import { requestStatus } from "../../constants/requestConstants";
 
 export const fetchTasks = () => {
     return async(dispatch: AppDispatch) => {
         try {
             dispatch(systemFetch());
             
-            const data = await fetchTasksApi();
+            const response = await fetchTasksApi();
 
-            if (data.status === requestStatus.OK) {
-
-                dispatch(taskFetchingSucces(data.tasks));
-            }
+            dispatch(taskFetchingSucces(response.data));
 
             dispatch(systemFetchSuccess());
 
@@ -41,11 +35,10 @@ export const fetchTask = (id: string) => {
                 return;
             }
 
-            const data = await fetchTaskApi(id);            
+            const response = await fetchTaskApi(id);            
 
-            if (data.status === requestStatus.OK) {
-                dispatch(setActiveTask(data.task));
-            }
+            dispatch(setActiveTask(response.data));
+
             dispatch(systemFetchSuccess());
 
         } catch(e) {
@@ -59,40 +52,29 @@ export const saveTask = (task: ITask) => {
 
         if (!task.todos || !task.todos.length) {
             dispatch(systemFetchError('No data!'));
-            return;
+            return false;
         }
 
         try {
 
             const saveTask = {
-                ...task,
-                status: getTaskStatus(
-                    task.date_start,
-                    task.date_end,
-                    task.todos
-                )
+                ...task
             }
 
             if (saveTask.id === "new") {
 
-                const data = await addTaskApi(saveTask);
+                const response = await addTaskApi(saveTask);
+                
+                dispatch(addTask(response.data));
+                dispatch(systemFetchSuccess());
+                return response.data.id;
 
-                if (data.status === requestStatus.OK) {
-                    dispatch(taskSlice.actions.addTask(data.task));
-                    dispatch(systemFetchSuccess());
-                    return data.task.id;
-                }
-
-            } else {
-                const data = await updateTaskApi(saveTask);
-
-                if (data) {
-                    dispatch(taskSlice.actions.saveTask(saveTask));
-                    dispatch(systemFetchSuccess());
-                    return saveTask.id;
-                }
             }
-            dispatch(systemFetchError("Error!"));
+            const response = await updateTaskApi(saveTask);
+
+            dispatch(updateTask(response.data));
+            dispatch(systemFetchSuccess());
+            return response.data.id;
 
         } catch (e) {
             dispatch(systemFetchError("Error when trying to save task!"))
@@ -104,14 +86,11 @@ export const deleteTask = (id: string) => {
         try {
             dispatch(systemFetch());
 
-            const data = await deleteTaskApi(id);
+            await deleteTaskApi(id);
 
-            if (data.status === requestStatus.OK) {
-
-                dispatch(taskSlice.actions.deleteTask(id));
+            dispatch(taskSlice.actions.deleteTask(id));
     
-                dispatch(taskSlice.actions.clearActiveTask());
-            }
+            dispatch(taskSlice.actions.clearActiveTask());
 
             dispatch(systemFetchSuccess());
 

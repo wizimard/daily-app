@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { IEntry } from "../../models/IEntry";
-import { formatDate } from "../../utils/date";
 
 interface EntryState {
     entries: IEntry[];
@@ -22,18 +21,7 @@ export const entrySlice = createSlice({
     initialState,
     reducers: {
         setEntries(state, action: PayloadAction<IEntry[]>) {
-
-            if (action.payload && action.payload.length > 0) {
-                for (let entry of state.entries) {
-                    if (entry.id === action.payload[0].id) {
-                        state.isAllFetching = true;
-                        return;
-                    }
-                }
-                state.entries = state.entries.concat(action.payload);
-                return;
-            }
-            state.isAllFetching = true;
+            state.entries = action.payload;
         },
         setActiveEntry(state, action: PayloadAction<IEntry | string>) {
             state.isChangedEntry = false;            
@@ -41,7 +29,7 @@ export const entrySlice = createSlice({
             if (action.payload === "new") {
                 state.activeEntry = {
                     "id": "new",
-                    "date": formatDate((new Date()).toString()),
+                    "date": (new Date()).toString(),
                     "title": '',
                     "content": "",
                     "images": [],
@@ -50,7 +38,12 @@ export const entrySlice = createSlice({
                 return;
             }
 
-            state.activeEntry = JSON.parse(JSON.stringify(action.payload));
+            if (typeof action.payload === 'string') return;
+
+            state.activeEntry = JSON.parse(JSON.stringify({
+                ...action.payload,
+                date: new Date(action.payload.date)
+            }));
         },
         clearActiveEntry(state) {
             state.activeEntry = null;

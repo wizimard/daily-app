@@ -5,6 +5,8 @@ import { Calendar } from "../../ui";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { changeTaskDateStart } from "../../redux/reducers/TaskSlice";
 
+import { formatDate } from "../../utils/date";
+
 const TaskDateStart:React.FC = () => {
 
     const dispatch = useAppDispatch();
@@ -24,7 +26,7 @@ const TaskDateStart:React.FC = () => {
 
     return (
         <span className="task__date task__date--start" onClick={handlerShowCalendar}>
-            {dateStart}
+            {formatDate(dateStart)}
             {isShow && <Calendar selectedDate={new Date()} handlerSelectDate={handlerSelectDate} />}
         </span>
     )

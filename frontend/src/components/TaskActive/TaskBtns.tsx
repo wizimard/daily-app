@@ -21,7 +21,7 @@ const TaskBtns:React.FC = () => {
             const newId = dispatch(saveTask(activeTask));
             
             Promise.resolve(newId).then((id) => {
-                navigate(`/task/${id}`);
+                !!id && navigate(`/task/${id}`);
             });
         }
     }

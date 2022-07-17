@@ -44,7 +44,7 @@ const DiaryEntries: React.FC<DiaryEntriesProps> = memo(({ entries, activeId }) =
                                 </div>
                             </div>
                             <div className="diary-entry__right">
-                                <span className="diary-entry__date">{entry.date}</span>
+                                <span className="diary-entry__date">{formatDate(entry.date)}</span>
                                 <h3 className="diary-entry__title">{entry.title}</h3>
                                 <span className="diary-entry__notes">{entry.notes}</span>
                             </div>

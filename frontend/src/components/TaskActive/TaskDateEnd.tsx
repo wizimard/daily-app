@@ -5,6 +5,8 @@ import { Calendar } from "../../ui";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { changeTaskDateEnd } from "../../redux/reducers/TaskSlice";
 
+import { formatDate } from "../../utils/date";
+
 const TaskDateEnd:React.FC = () => {
 
     const dispatch = useAppDispatch();
@@ -24,7 +26,7 @@ const TaskDateEnd:React.FC = () => {
 
     return (
         <span className="task__date task__date--end" onClick={handlerShowCalendar}>
-            {dateEnd}
+            {formatDate(dateEnd)}
             {isShow && <Calendar selectedDate={new Date()} handlerSelectDate={handlerSelectDate} />}
         </span>
     )

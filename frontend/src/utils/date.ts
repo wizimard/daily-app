@@ -1,11 +1,11 @@
 import { months } from "../constants/months";
 
 
-export function formatDate(strDate: string = (new Date()).toString()): string {
+export function formatDate(dateStr: string = (new Date()).toString()): string {
 
-    const date = new Date(strDate);    
+    const date = new Date(dateStr);
 
-    const currentDate = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+    const formatDate = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 
-    return currentDate;
+    return formatDate;
 }

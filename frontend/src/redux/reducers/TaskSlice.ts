@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import { ITask, ITodo } from "../../models/ITask"
 
-import { formatDate } from "../../utils/date";
 import { generateId } from "../../utils/id";
 
 interface TaskState {
@@ -42,12 +41,13 @@ export const taskSlice = createSlice({
             if (action.payload === "new") {
                 state.activeTask = {
                     id: 'new',
-                    date_start: formatDate(),
-                    date_end: formatDate(),
+                    date_start: (new Date()).toString(),
+                    date_end: (new Date()).toString(),
                     title: '',
                     description: '',
                     todos: [],
                     status: {
+                        status: 'running',
                         done: ''
                     }
                 }
@@ -77,14 +77,14 @@ export const taskSlice = createSlice({
         },
         changeTaskDateStart(state, action: PayloadAction<string>) {
             if (state.activeTask) {
-                state.activeTask.date_start = formatDate(action.payload);
+                state.activeTask.date_start = action.payload;
 
                 state.isChanged = true;
             }
         },
         changeTaskDateEnd(state, action: PayloadAction<string>) {
             if (state.activeTask) {
-                state.activeTask.date_end = formatDate(action.payload);
+                state.activeTask.date_end = action.payload;
 
                 state.isChanged = true;
             }
@@ -169,16 +169,13 @@ export const taskSlice = createSlice({
         addTask(state, action: PayloadAction<ITask>) {
             state.tasks = [...state.tasks, action.payload];
         },
-        saveTask(state, action: PayloadAction<ITask>) {
+        updateTask(state, action: PayloadAction<ITask>) {
             state.isChanged = false;
 
-            for (let i = 0; i < state.tasks.length; i++) {
-                if (state.tasks[i].id === action.payload.id) {
-                    state.tasks[i] = action.payload;
-                    
-                    return;
-                }
-            }
+            state.tasks = state.tasks.map((task) => (
+                task.id === action.payload.id ? action.payload : task
+            ));
+            
         },
         deleteTask(state, action: PayloadAction<string>) {
             state.tasks = state.tasks.filter(task => task.id !== action.payload);
@@ -201,7 +198,7 @@ export const {
     changeStatusTaskTodo,
     changeContentTaskTodo,
     addTask,
-    saveTask,
+    updateTask,
     deleteTask
 } = taskSlice.actions;
 

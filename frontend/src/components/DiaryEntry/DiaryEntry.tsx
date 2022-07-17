@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 
 import { ThemeContext } from "../../themes/Themes";
 
-import { ContentScreen } from "../../ui";
+import { ContentScreen, EmptyScreen } from "../../ui";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import { systemSubmitModal } from "../../redux/reducers/SystemSlice";
 import { clearActiveEntry } from "../../redux/reducers/EntrySlice";
 import { systemConstants } from "../../constants/systemConstants";
+
+import { formatDate } from "../../utils/date";
 
 import DiaryEntryContent from "./DiaryEntryContent";
 import DiaryEntryNotes from "./DiaryEntryNotes";
@@ -60,7 +62,7 @@ const DiaryEntry: React.FC = () => {
                                 onClick={handlerBack}
                                 alt="back" />
                         </div>
-                        <span className="entry__date">{entryDate}</span>
+                        <span className="entry__date">{formatDate(entryDate)}</span>
                     </div>
                     <div className="img-container img-click entry__delete">
                         <img src={theme.img.close.x1} 
@@ -85,7 +87,7 @@ const DiaryEntry: React.FC = () => {
                 <DiaryEntryButtons />
             </>
         ) : (
-            <span>Here is empty!</span>
+            <EmptyScreen />
         )}
         </ContentScreen>
     );

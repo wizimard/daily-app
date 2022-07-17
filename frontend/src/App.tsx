@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 
 import { ThemeContextProvider } from './themes/Themes';
@@ -9,26 +9,32 @@ import { Spinner } from './ui';
 
 import { routes } from './routes';
 
-import { useAppSelector } from './hooks/redux';
+import { useAppDispatch, useAppSelector } from './hooks/redux';
+
+import { userCheckAuth } from './redux/action-creator/UserActionCreator';
 
 import './App.scss';
 
 function App() {
 
-  const user = useAppSelector(state => state.user);
+  const dispatch = useAppDispatch();
 
-  const isAuth = () => {
-    return user.email && user.username;
-  }
+  const auth = useAppSelector(state => state.auth);
 
-  const auth = isAuth();
+  useEffect(() => {
+    dispatch(userCheckAuth());
+  }, []);
+
+  if (auth.isLoading) return (
+    <Spinner />
+  );
 
   return (
     <ThemeContextProvider>
       <div className='App theme_light'>
         <Router>
           <Routes>
-              {(auth) ? (<>
+              {(auth.isAuth) ? (<>
                 {routes.private.map((route, index) => (
                   <Route key={index} path={route.path} element={
                     <Suspense fallback={<Spinner text='wait' />}>
@@ -46,7 +52,7 @@ function App() {
                 ))}
               </>)}
           <Route path="*" 
-                element={<Navigate to={auth ? (routes.redirect.private) : (routes.redirect.public)} replace />} />
+                element={<Navigate to={auth.isAuth ? (routes.redirect.private) : (routes.redirect.public)} replace />} />
           </Routes>
           <SystemComponent />
         </Router>

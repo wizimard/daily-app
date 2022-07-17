@@ -1,11 +1,12 @@
 {
 	"compilerOptions": {
-		"target": "es5",
-		"module": "commonjs",
+		"target": "ES6",
+		"module": "CommonJS",
 		"moduleResolution": "node",
 		"lib": [
 			"es2015"
 		],
+		"typeRoots": ["./src/types"],
 
 		"rootDir": "src",
 		"outDir": "lib",
@@ -29,10 +30,17 @@
 		"downlevelIteration": true,
 		"declaration": true,
 
-		"pretty": true
+		"pretty": true,
+		
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
 	},
 	"include": [
 		"typings/**/*",
 		"src/**/*"
+	],
+	"files": [
+		"src/types/express.d.ts",
+		"src/index.ts"
 	]
 }

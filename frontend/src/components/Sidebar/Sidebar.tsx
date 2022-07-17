@@ -4,7 +4,7 @@ import { ThemeContext } from "../../themes/Themes";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
-import { userClear } from "../../redux/reducers/UserSlice";
+import { userSignOut } from "../../redux/action-creator/UserActionCreator";
 
 import Menu from "./Menu";
 
@@ -14,12 +14,12 @@ const Sidebar: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const user = useAppSelector(state => state.user);
+    const user = useAppSelector(state => state.auth.user);
 
     const { theme, switchTheme } = useContext(ThemeContext);
     
     const handlerLogout = () => {
-        dispatch(userClear());
+        dispatch(userSignOut());
     }
     const handlerSwitchTheme = () => {
         switchTheme();

@@ -1,9 +1,9 @@
 import { AppDispatch } from "../store";
 
 import { systemFetch, systemFetchError, systemFetchSuccess } from "../reducers/SystemSlice";
-import { userClear, userSet } from "../reducers/UserSlice";
+import { startLoading, stopLoading, setUser, clearUser } from "../reducers/AuthSlice";
 
-import { userSignInApi, userSignUpApi } from "../../api/userApi";
+import { checkAuthApi, userSignInApi, userSignOutApi, userSignUpApi } from "../../api/authApi";
 
 export const userSignIn = (email: string, password: string) => {
     return async(dispatch: AppDispatch) => {
@@ -11,19 +11,17 @@ export const userSignIn = (email: string, password: string) => {
         dispatch(systemFetch());
 
         try {
-            const data = await userSignInApi(email, password);
-    
-            if (data && data.length > 0) {
-                dispatch(systemFetchSuccess());
+            const response = await userSignInApi(email, password);
+            
+            localStorage.setItem('token', response.data.accessToken);
 
-                dispatch(userSet(data[0]));
+            dispatch(setUser(response.data.user));
 
-                return;
-            }
-            dispatch(systemFetchError("Login or password is incorrect!"));
+            dispatch(systemFetchSuccess());
 
-        } catch(e) {
-            dispatch(systemFetchError("Error!"));
+        } catch(e: any) {
+            console.log(e.response);
+            dispatch(systemFetchError(e.response.data.message));
         }
     }
 }
@@ -34,24 +32,48 @@ export const userSignUp = (email: string, password: string) => {
 
         try {
     
-            const data = await userSignUpApi(email, password);
-    
-            if (data.status === "ok") {
-                dispatch(systemFetchSuccess());
+            const response = await userSignUpApi(email, password);
+            
+            localStorage.setItem('token', response.data.accessToken);
 
-                dispatch(userSet(data.data));
-            }
-            if (data.status === "error") {
-                dispatch(systemFetchError(data.error ?? ''));
-            }
+            dispatch(setUser(response.data.user));
 
-        } catch (e) {
-            dispatch(systemFetchError("Error!"));
+            dispatch(systemFetchSuccess());
+
+        } catch (e: any) {
+            console.log(e.response);
+            dispatch(systemFetchError(e.response.data.message));
         }
     }
 }
-export const userLogout = () => {
+export const userSignOut = () => {
     return async(dispatch: AppDispatch) => {
-        dispatch(userClear);        
+
+        dispatch(systemFetch());
+
+        await userSignOutApi();
+
+        localStorage.removeItem('token');
+
+        dispatch(clearUser()); 
+
+        dispatch(systemFetchSuccess());       
+    }
+}
+export const userCheckAuth = () => {
+    return async(dispatch: AppDispatch) => {
+        dispatch(startLoading());
+
+        try{
+            const response = await checkAuthApi();
+
+            localStorage.setItem('token', response.data.accessToken);
+
+            dispatch(setUser(response.data.user));
+
+        } catch(e: any) {
+            console.log(e.response.data.message);
+            dispatch(stopLoading());
+        }
     }
 }

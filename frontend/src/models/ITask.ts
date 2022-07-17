@@ -13,6 +13,6 @@ export interface ITask {
     todos: ITodo[];
     status: {
         done: string;
-        status?: string;
+        status: string;
     };
 }

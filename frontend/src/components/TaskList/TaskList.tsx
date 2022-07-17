@@ -6,6 +6,8 @@ import { ListItem, ListScreen } from "../../ui";
 
 import { ITask } from "../../models/ITask";
 
+import { formatDate } from "../../utils/date";
+
 import "./TaskList.scss";
 
 interface TaskListProps {
@@ -38,7 +40,7 @@ const TaskList:React.FC<TaskListProps> = ({tasks, activeItem}) => {
                                   addClass={activeItem === task.id ? "bg-none list-item_active" : "bg-none"}>
                             <div className="task-item__left">
                                 <span className="task-item__date">
-                                    {`${task.date_start} - ${task.date_end}`}
+                                    {`${formatDate(task.date_start)} - ${formatDate(task.date_end)}`}
                                 </span>
                                 <h3 className="task-item__title">{task.title}</h3>
                             </div>

@@ -8,23 +8,19 @@ import { deleteEntryApi, fetchEntriesApi, fetchEntryApi, addEntryApi, updateEntr
 import { formatDate } from '../../utils/date';
 
 import { IEntry } from '../../models/IEntry';
-import { requestStatus } from "../../constants/requestConstants";
 
-export const fetchEntries = (currentCount: number) => async(dispatch: AppDispatch) => {
+export const fetchEntries = () => async(dispatch: AppDispatch) => {
     dispatch(systemFetch());
 
     try {
-        const data = await fetchEntriesApi();
+        const response = await fetchEntriesApi();        
 
-        if (data.status === requestStatus.OK) {
-
-            dispatch(setEntries(data.entries));
-        }
+        dispatch(setEntries(response.data));
 
         dispatch(systemFetchSuccess());
 
-    } catch (e) {        
-        dispatch(systemFetchError("Error when trying to load entries!"));
+    } catch (e: any) {
+        dispatch(systemFetchError(e.response.data.message));
     }
 }
 export const fetchEntry = (id: string) => {
@@ -32,23 +28,20 @@ export const fetchEntry = (id: string) => {
         dispatch(systemFetch());
 
         try {
-
             if (id === 'new') {
                 dispatch(setActiveEntry(id));
                 dispatch(systemFetchSuccess());
                 return;
             }
 
-            const data = await fetchEntryApi(id);            
+            const response = await fetchEntryApi(id);
 
-            if (data.status === requestStatus.OK) {
-                dispatch(setActiveEntry(data.entry));            
-            }
+            dispatch(setActiveEntry(response.data));
 
             dispatch(systemFetchSuccess());
 
-        } catch(e) {            
-            dispatch(systemFetchError('Error when trying to load entry!'));
+        } catch(e: any) {            
+            dispatch(systemFetchError(e.response.data.message));
         }
     }
 }
@@ -62,26 +55,22 @@ export const saveEntry = (entry: IEntry) => async(dispatch: AppDispatch) => {
 
         if (entrySave.id === "new") {
 
-            const data = await addEntryApi(entrySave);
+            const response = await addEntryApi(entrySave);            
 
-            if (data.status === requestStatus.OK) {
-                dispatch(addEntry(data.entry));
-
-                dispatch(systemFetchSuccess());
-
-                return data.entry.id;
-            }
-        }
-
-        const data = await updateEntryApi(entrySave);
-
-        if (data.status === requestStatus.OK) {
-            dispatch(updateEntry(data.entry));
+            dispatch(addEntry(response.data));
 
             dispatch(systemFetchSuccess());
 
-            return entrySave.id;
+            return response.data.id;
         }
+
+        const response = await updateEntryApi(entrySave);
+
+        dispatch(updateEntry(response.data));
+
+        dispatch(systemFetchSuccess());
+
+        return response.data.id;
 
     } catch (e) {
         dispatch(systemFetchError("Error when trying to save entry!"));
