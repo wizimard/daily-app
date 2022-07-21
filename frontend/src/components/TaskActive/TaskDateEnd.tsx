@@ -5,7 +5,7 @@ import { Calendar } from "../../ui";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { changeTaskDateEnd } from "../../redux/reducers/TaskSlice";
 
-import { formatDate } from "../../utils/date";
+import { formatDate } from "../../helpers/date";
 
 const TaskDateEnd:React.FC = () => {
 

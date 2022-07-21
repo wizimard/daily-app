@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import { ITask, ITodo } from "../../models/ITask"
 
-import { generateId } from "../../utils/id";
+import { generateId } from "../../helpers/id";
 
 interface TaskState {
     tasks: ITask[];

@@ -61,15 +61,21 @@ export const entrySlice = createSlice({
                 state.isChangedEntry = true;
             }
         },
-        changeEntryImages(state, action: PayloadAction<string[]>) {
-            if (state.activeEntry) {
-                state.activeEntry.images = action.payload;
-                state.isChangedEntry = true;
-            }
-        },
         changeEntryNotes(state, action: PayloadAction<string>) {
             if (state.activeEntry) {
                 state.activeEntry.notes = action.payload;
+                state.isChangedEntry = true;
+            }
+        },
+        addEntryImages(state, action: PayloadAction<string[]>) {
+            if (state.activeEntry) {
+                state.activeEntry.images = state.activeEntry.images.concat(action.payload);
+                state.isChangedEntry = true;
+            }
+        },
+        deleteEntryImage(state, action: PayloadAction<string>) {
+            if (state.activeEntry) {
+                state.activeEntry.images = state.activeEntry.images.filter(image => image !== action.payload);
                 state.isChangedEntry = true;
             }
         },
@@ -103,7 +109,8 @@ export const { setEntries,
                setActiveEntry,
                clearActiveEntry,
                changeEntryContent,
-               changeEntryImages,
+               addEntryImages,
+               deleteEntryImage,
                changeEntryNotes,
                changeEntryTitle,
                addEntry,

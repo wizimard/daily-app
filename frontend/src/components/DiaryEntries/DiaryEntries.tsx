@@ -5,7 +5,7 @@ import { ThemeContext } from "../../themes/Themes";
 import { ListItem, ListScreen } from "../../ui";
 
 import { IEntry } from "../../models/IEntry";
-import { formatDate } from "../../utils/date";
+import { formatDate } from "../../helpers/date";
 
 import './DiaryEntries.scss';
 

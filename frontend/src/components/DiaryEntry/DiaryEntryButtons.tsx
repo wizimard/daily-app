@@ -21,7 +21,7 @@ const DiaryEntryButtons:React.FC = () => {
         if (activeEntry) {
             const newId = dispatch(saveEntry(activeEntry));
             Promise.resolve(newId).then(function(value) {
-                navigate(`/diary/${value}`);
+                value && navigate(`/diary/${value}`);
             });
         }
     }

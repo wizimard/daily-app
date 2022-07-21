@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 
 import TaskDto from "../dtos/TaskDto";
 
-import TaskModel from "../models/TaskModel";
+import TaskModel, { ITodo } from "../models/TaskModel";
 
 import ApiError from '../exceptions/ApiError';
 
@@ -29,7 +29,7 @@ class TaskService {
         date_end: string,
         title: string,
         description: string,
-        todos: any[]) {
+        todos: ITodo[]) {
             
             const task = await TaskModel.create({
                 author: new ObjectId(userId),
@@ -50,6 +50,10 @@ class TaskService {
             author: new ObjectId(userId)
         });
 
+        if (!task) {
+            throw ApiError.NotFound();
+        }
+
         const taskDto = new TaskDto(task);
 
         return taskDto;
@@ -60,7 +64,7 @@ class TaskService {
         date_end: string,
         title: string,
         description: string,
-        todos: any[]) {
+        todos: ITodo[]) {
 
             const task = await TaskModel.findOneAndUpdate({
                 _id: id,
@@ -72,6 +76,10 @@ class TaskService {
                 description,
                 todos: todos.map(todo => ({ ...todo, id: v4()}))
             }, {new: true});
+            
+            if (!task) {
+                throw ApiError.NotFound();
+            }
 
             const taskDto = new TaskDto(task);
 

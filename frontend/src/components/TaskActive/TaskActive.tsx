@@ -52,7 +52,7 @@ const TaskActive:React.FC = () => {
     }, [dispatch, activeTaskId, handlerBack]);
 
     return(
-        <ContentScreen>
+        <ContentScreen isDisplayNone={!activeTaskStatus}>
         {activeTaskStatus ? (
             <>
                 <div className="task__header">

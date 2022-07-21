@@ -6,7 +6,7 @@ import { ListItem, ListScreen } from "../../ui";
 
 import { ITask } from "../../models/ITask";
 
-import { formatDate } from "../../utils/date";
+import { formatDate } from "../../helpers/date";
 
 import "./TaskList.scss";
 

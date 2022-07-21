@@ -19,14 +19,15 @@ const Diary: React.FC = () => {
 
     useEffect(() => {
 
-        dispatch(clearActiveEntry());
         dispatch(fetchEntries());
 
     }, [dispatch]);
 
     useEffect(() => {
 
-        if (entryId) dispatch(fetchEntry(entryId));
+        dispatch(clearActiveEntry());
+        
+        if (entryId && entryId !== 'undefined') dispatch(fetchEntry(entryId));
 
     }, [dispatch, entryId]);
 

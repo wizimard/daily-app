@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { validationResult } from "express-validator";
 
 import ApiError from "../exceptions/ApiError";
 import TaskService from "../services/TaskService";
@@ -37,6 +38,11 @@ class TaskController {
     }
     async createTask(req: Request, res: Response, next: NextFunction) {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                throw ApiError.BadRequest('Task title must not be empty!', errors.array());
+            }
+
             const user = req.user;
             if (!user) {
                 throw ApiError.UnauthorizedError();
@@ -53,6 +59,11 @@ class TaskController {
     }
     async updateTask(req: Request, res: Response, next: NextFunction) {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                throw ApiError.BadRequest('Task title must not be empty!', errors.array());
+            }
+
             const user = req.user;
             if (!user) throw ApiError.UnauthorizedError();
 

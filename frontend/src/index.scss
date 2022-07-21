@@ -35,7 +35,9 @@ body, #root, .App {
     
     overflow: auto;
 }
-
+.content-screen {
+    padding: 20px;
+}
 ul, li {
     padding: 0;
     margin: 0;
@@ -85,5 +87,8 @@ ul, li {
     }
     .content-screen {
         z-index: 10;
+    }
+    .dsp-none {
+        display: none;
     }
 }

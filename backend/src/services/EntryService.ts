@@ -6,7 +6,9 @@ import ApiError from "../exceptions/ApiError";
 
 import EntryModel from "../models/EntryModel";
 
-class DiaryService {
+import { deleteCandidates, deleteFile } from "./ImageService";
+
+class EntryService {
     async getEntries(userId: string) {
         const entries = await EntryModel.find({
             author: new ObjectId(userId)
@@ -23,7 +25,7 @@ class DiaryService {
     async getEntry(author: string, entryId: string) {
         const entry = await EntryModel.findById(entryId);        
 
-        if (!entry || entry.author._id.toString() !== author) {
+        if (!entry || entry.author.toString() !== author) {
             throw ApiError.NotFound();
         }
 
@@ -35,7 +37,7 @@ class DiaryService {
             title: string,
             content: string,
             date: string,
-            images: any[],
+            images: string[],
             notes: string) {
 
                 const entry = await EntryModel.create({
@@ -47,6 +49,10 @@ class DiaryService {
                     notes
                 });
 
+                images.forEach(image => {
+                    deleteCandidates.delete(image);
+                });
+
                 const entryDto = new EntryDto(entry);
 
                 return entryDto;
@@ -56,37 +62,61 @@ class DiaryService {
         title: string,
         content: string,
         date: string,
-        images: any[],
+        images: string[],
         notes: string
-    ) {  
-        
-        const entry = await EntryModel.findOneAndUpdate({
+    ) {
+
+        const entry = await EntryModel.findOne({
             _id: id,
             author: new ObjectId(author)
-        }, {
+        });
+
+        if (!entry) throw ApiError.NotFound();
+
+        const deleteImages = entry.images.filter(image => !images.includes(image));
+
+        deleteImages.forEach(image => {
+            deleteFile(image);
+        });
+
+        await entry.updateOne({
+            _id: id,
+            author: new ObjectId(author),
             title,
             content,
             date,
             images,
             notes
         }, {new: true});
+        
 
-        if (!entry) throw ApiError.NotFound();
+        images.forEach(image => {
+            deleteCandidates.delete(image);
+        });
+
+        await entry.save();
 
         const entryDto = new EntryDto(entry);
 
         return entryDto;
     }
     async deleteEntry(id: string, author: string) {
-        const deleteData = await EntryModel.deleteOne({
+
+        const entry = await EntryModel.findOne({
             _id: id,
             author: new ObjectId(author)
-        });        
+        });
 
-        if (deleteData.deletedCount === 0) throw ApiError.NotFound();
+        if (!entry) throw ApiError.NotFound();
+
+        entry.images.forEach(image => {
+            deleteFile(image);
+        });
+
+        await entry.deleteOne();
 
         return true;
     }
 }
 
-export default new DiaryService();
+export default new EntryService();

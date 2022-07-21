@@ -1,11 +1,11 @@
 import { AppDispatch } from "../store";
 
-import { addEntry, removeEntry, setActiveEntry, setEntries, updateEntry } from '../reducers/EntrySlice';
+import { addEntry, addEntryImages, removeEntry, setActiveEntry, setEntries, updateEntry } from '../reducers/EntrySlice';
 import { systemFetch, systemFetchError, systemFetchSuccess } from '../reducers/SystemSlice';
 
-import { deleteEntryApi, fetchEntriesApi, fetchEntryApi, addEntryApi, updateEntryApi } from '../../api/entryApi';
+import { deleteEntryApi, fetchEntriesApi, fetchEntryApi, addEntryApi, updateEntryApi, uploadEntryImage } from '../../api/entryApi';
 
-import { formatDate } from '../../utils/date';
+import { formatDate } from '../../helpers/date';
 
 import { IEntry } from '../../models/IEntry';
 
@@ -40,7 +40,7 @@ export const fetchEntry = (id: string) => {
 
             dispatch(systemFetchSuccess());
 
-        } catch(e: any) {            
+        } catch(e: any) {
             dispatch(systemFetchError(e.response.data.message));
         }
     }
@@ -72,8 +72,8 @@ export const saveEntry = (entry: IEntry) => async(dispatch: AppDispatch) => {
 
         return response.data.id;
 
-    } catch (e) {
-        dispatch(systemFetchError("Error when trying to save entry!"));
+    } catch (e: any) {
+        dispatch(systemFetchError(e.response.data.message));
     }
 }
 export const deleteEntry = (id: string) => {
@@ -90,8 +90,39 @@ export const deleteEntry = (id: string) => {
 
             return true;
 
-        } catch (e) {
-            dispatch(systemFetchError("Error when trying to delete entry!"));
+        } catch (e: any) {
+            dispatch(systemFetchError(e.response.data.message));
+        }
+    }
+}
+export const uploadImages = (images: FileList | null) => {
+    return async(dispatch: AppDispatch) => {        
+        if (!images || images.length === 0) return;
+
+        dispatch(systemFetch());
+
+        try {
+
+            const imageType = /image.*/;
+
+            const data = new FormData();
+            
+            for (let i = 0; i < images.length; i++) {
+                const image = images[i];
+
+                if (!image.type.match(imageType)) return;
+                
+                data.append(`images`, image);
+            }
+
+            const response = await uploadEntryImage(data);
+
+            dispatch(addEntryImages(response.data));
+            
+            dispatch(systemFetchSuccess());
+
+        } catch(e: any) {
+            dispatch(systemFetchError(e.response.data.message));
         }
     }
 }

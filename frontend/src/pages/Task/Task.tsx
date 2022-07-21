@@ -18,15 +18,16 @@ const Task:React.FC = () => {
     const tasks = useAppSelector(state => state.task.tasks);
 
     useEffect(() => {
-
-        dispatch(clearActiveTask());
+        
         dispatch(fetchTasks());
     
     }, [dispatch]);
 
     useEffect(() => {
 
-        if (taskId) dispatch(fetchTask(taskId));
+        dispatch(clearActiveTask());
+
+        if (taskId && taskId !== 'undefined') dispatch(fetchTask(taskId));
 
     }, [dispatch, taskId]);
     

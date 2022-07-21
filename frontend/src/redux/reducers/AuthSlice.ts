@@ -14,7 +14,7 @@ const initialState:AuthState = {
         id: '',
         email: '',
         username: '',
-        isActivated: false
+        isConfirm: false
     }
 };
 

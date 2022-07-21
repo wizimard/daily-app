@@ -22,16 +22,16 @@ class UserService {
 
         const hashPassword = await bcrypt.hash(password, 3);
 
-        const activationLink = uuid();
+        const confirmLink = uuid();
 
         const user = await UserModel.create({
             email,
             password: hashPassword,
             username: username?.trim() || email,
-            activationLink
+            confirmLink
         });
 
-        await MailService.sendActivationMail(email, `${API_URL}/api/activate/${activationLink}`);
+        await MailService.sendConfirmMail(email, `${API_URL}/api/confirm/${confirmLink}`);
 
         const userDto = new UserDto(user);
 
@@ -44,13 +44,13 @@ class UserService {
             user: userDto
         }
     }
-    async activate(activationLink: string) {
-        const user = await UserModel.findOne({ activationLink });
+    async confirm(confirmLink: string) {
+        const user = await UserModel.findOne({ confirmLink });
 
         if (!user) {
-            throw ApiError.BadRequest('Uncorrect activation link');
+            throw ApiError.BadRequest('Uncorrect confirmation link');
         }
-        user.isActivated = true;
+        user.isConfirm = true;
 
         await user.save();
     }
@@ -92,6 +92,8 @@ class UserService {
             throw ApiError.UnauthorizedError();
         }
         const user = await UserModel.findById(tokenFromDb.user);
+
+        if (!user) throw ApiError.UnauthorizedError();
 
         const userDto = new UserDto(user);
 

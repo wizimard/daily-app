@@ -61,11 +61,11 @@ class UserController {
         }
         return;
     }
-    async activationLink(req: Request, res: Response, next: NextFunction) {
+    async confirm(req: Request, res: Response, next: NextFunction) {
         try {
-            const activationLink = req.params.link;
+            const confirmationLink = req.params.link;
 
-            await UserService.activate(activationLink);
+            await UserService.confirm(confirmationLink);
 
             return res.redirect(CLIENT_URL);
         } catch(e) {

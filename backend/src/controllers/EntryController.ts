@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from "express";
+import { validationResult } from "express-validator";
 
-import DiaryService from "../services/DiaryService";
+import EntryService from "../services/EntryService";
 
 import ApiError from "../exceptions/ApiError";
+import { API_URL } from "../constants";
 
-class DiaryController {
+class EntryController {
     async getEntries(req: Request, res: Response, next: NextFunction) {
         try {
             const user = req.user;
@@ -13,7 +15,7 @@ class DiaryController {
                 return ApiError.UnauthorizedError();
             }
 
-            const entries = await DiaryService.getEntries(user.id);            
+            const entries = await EntryService.getEntries(user.id);            
 
             return res.status(200).json(entries);
         } catch(e) {
@@ -33,7 +35,7 @@ class DiaryController {
                 throw ApiError.NotFound();
             }
 
-            const entry = await DiaryService.getEntry(user.id, entryId);
+            const entry = await EntryService.getEntry(user.id, entryId);
 
             return res.status(200).json(entry);
         } catch(e) {
@@ -42,6 +44,11 @@ class DiaryController {
     }
     async createEntry(req: Request, res: Response, next: NextFunction) {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                throw ApiError.BadRequest('Enty content must not be empty!', errors.array());
+            }
+
             const user = req.user;
             if (!user) {
                 return ApiError.UnauthorizedError();
@@ -49,7 +56,7 @@ class DiaryController {
 
             const { date, title, content, images, notes } = req.body;
 
-            const data = await DiaryService.createEntry(user.id, title, content, date, images, notes);
+            const data = await EntryService.createEntry(user.id, title, content, date, images, notes);
 
             return res.status(200).json(data);
         } catch(e) {
@@ -58,6 +65,11 @@ class DiaryController {
     }
     async updateEntry(req: Request, res: Response, next: NextFunction) {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                throw ApiError.BadRequest('Enty content must not be empty!', errors.array());
+            }
+
             const user = req.user;
             if (!user) {
                 return ApiError.UnauthorizedError();
@@ -65,7 +77,7 @@ class DiaryController {
 
             const { id, date, title, content, images, notes } = req.body;
 
-            const data = await DiaryService.updateEntry(id, user.id, title, content, date, images, notes);
+            const data = await EntryService.updateEntry(id, user.id, title, content, date, images, notes);
 
             return res.status(200).json(data);
         } catch(e) {
@@ -84,13 +96,35 @@ class DiaryController {
                 throw ApiError.NotFound();
             }
 
-            await DiaryService.deleteEntry(id, user.id);
+            await EntryService.deleteEntry(id, user.id);
 
             return res.status(200).json({});
         } catch(e) {
             return next(e);
         }
     }
+    async uploadImage(req: Request, res: Response, next: NextFunction) {
+        try {
+            const user = req.user;
+
+            if (!user) {
+                throw ApiError.UnauthorizedError();
+            }
+
+            if (!req.files) {
+                throw ApiError.BadRequest('no images');
+            }
+            
+            const data = (req.files as Express.Multer.File[]).map((file) => {
+                const destination = file.destination.replace('./uploads', '');
+                return `${API_URL}${destination}${file.filename}`;
+            });
+
+            return res.status(200).json(data);
+        } catch(e) {
+            return next(e);
+        }
+    }
 }
 
-export default new DiaryController();
+export default new EntryController();

@@ -11,7 +11,7 @@ import { systemSubmitModal } from "../../redux/reducers/SystemSlice";
 import { clearActiveEntry } from "../../redux/reducers/EntrySlice";
 import { systemConstants } from "../../constants/systemConstants";
 
-import { formatDate } from "../../utils/date";
+import { formatDate } from "../../helpers/date";
 
 import DiaryEntryContent from "./DiaryEntryContent";
 import DiaryEntryNotes from "./DiaryEntryNotes";
@@ -52,7 +52,7 @@ const DiaryEntry: React.FC = () => {
     }, [dispatch, entryId, handlerBack]);
 
     return (
-        <ContentScreen>
+        <ContentScreen isDisplayNone={!entryId}>
         {!!entryId ? (
             <>
                 <div className="entry__header">

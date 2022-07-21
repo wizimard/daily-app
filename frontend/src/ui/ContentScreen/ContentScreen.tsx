@@ -1,10 +1,13 @@
 import React from "react";
 
-import './ContentScreen.scss';
 
-const ContentScreen: React.FC = ({ children }) => {
+interface ContentScreenProps {
+    isDisplayNone?: boolean;
+}
+
+const ContentScreen:React.FC<ContentScreenProps> = ({ isDisplayNone = false, children }) => {
     return (
-        <div className="content-screen">
+        <div className={`content-screen ${isDisplayNone ? 'dsp-none' : ''}`}>
             {children}
         </div>
     );

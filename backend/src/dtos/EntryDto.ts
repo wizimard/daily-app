@@ -1,3 +1,5 @@
+import { IEntry } from "../models/EntryModel";
+
 export default class EntryDto {
     id;
     date;
@@ -6,7 +8,7 @@ export default class EntryDto {
     images;
     notes;
 
-    constructor(model: any) {        
+    constructor(model: IEntry) {        
         this.id = model._id;
         this.date = model.date;
         this.title = model.title;

@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { dirname } from 'path';
 
 export const DB_URL = process.env.DB_URL || '';
 export const PORT = process.env.PORT || 3010;
@@ -10,3 +11,4 @@ export const SMTP_USER = process.env.SMTP_USER || '';
 export const SMTP_PASSWORD = process.env.SMTP_PASSWORD || '';
 export const API_URL = process.env.API_URL || '';
 export const CLIENT_URL = process.env.CLIENT_URL || '';
+export const UPLOAD_PATH = `${dirname(require.main?.filename || '')}/../uploads`;

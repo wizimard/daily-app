@@ -6,7 +6,7 @@
 		"lib": [
 			"es2015"
 		],
-		"typeRoots": ["./src/types"],
+		"typeRoots": ["types"],
 
 		"rootDir": "src",
 		"outDir": "lib",
@@ -37,10 +37,11 @@
 	},
 	"include": [
 		"typings/**/*",
-		"src/**/*"
+		"src/**/*", 
+		"types"
 	],
 	"files": [
-		"src/types/express.d.ts",
+		"types/express.d.ts",
 		"src/index.ts"
 	]
 }
