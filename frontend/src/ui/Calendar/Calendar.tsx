@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Portal } from '..';
+import { ModalComponent } from '..';
 
 import { months } from '../../constants/months';
 
@@ -75,55 +75,40 @@ const Calendar:React.FC<CalendarProps> = ({ selectedDate, handlerSelectDate }) =
 
     }, [currentValue]);
 
-    const handlerKeyDown = useCallback((e: KeyboardEvent) => {
-        if (e.key === "Escape") {
-            handlerSelectDate(selectedDate);
-        }
+    const handlerCloseCalendar = useCallback(() => {
+        handlerSelectDate(selectedDate);
     }, [selectedDate, handlerSelectDate]);
-    
-
-    useEffect(() => {
-
-        document.body.addEventListener("keydown", handlerKeyDown);
-
-        return () => {
-            document.body.removeEventListener("keydown", handlerKeyDown);
-        };
-
-    }, [handlerKeyDown]);
 
     return (
-        <Portal>
-            <div className="calendar-container">
-                <div className="calendar">
-                    <div className="calendar__month">
-                        <div className="calendar__month--arrow calendar__month--prev"
-                            onClick={handlerPrevMonth}></div>
-                        <h2 className="calendar__month--value">{printMonth()}</h2>
-                        <div className="calendar__month--arrow calendar__month--next"
-                            onClick={handlerNextMonth}></div>
-                    </div>
-                    <div className="calendar__days">
-                        <span className="calendar__day">Mon</span>
-                        <span className="calendar__day">Tue</span>
-                        <span className="calendar__day">Wed</span>
-                        <span className="calendar__day">Thu</span>
-                        <span className="calendar__day">Fri</span>
-                        <span className="calendar__day">Sat</span>
-                        <span className="calendar__day">Sun</span>
-                    </div>
-                    <div className="calendar__dates">
-                        {monthDates.map((date, index) => (
-                            <div key={index} className="calendar__date--container">
-                                <DateElement date={date}
-                                    selectedDate={selectedDate}
-                                    handlerSelectDate={handlerSelectDate} />
-                            </div>
-                        ))}
-                    </div>
+        <ModalComponent closeModalHandle={handlerCloseCalendar}>
+            <div className="calendar">
+                <div className="calendar__month">
+                    <div className="calendar__month--arrow calendar__month--prev"
+                        onClick={handlerPrevMonth}></div>
+                    <h2 className="calendar__month--value">{printMonth()}</h2>
+                    <div className="calendar__month--arrow calendar__month--next"
+                        onClick={handlerNextMonth}></div>
+                </div>
+                <div className="calendar__days">
+                    <span className="calendar__day">Mon</span>
+                    <span className="calendar__day">Tue</span>
+                    <span className="calendar__day">Wed</span>
+                    <span className="calendar__day">Thu</span>
+                    <span className="calendar__day">Fri</span>
+                    <span className="calendar__day">Sat</span>
+                    <span className="calendar__day">Sun</span>
+                </div>
+                <div className="calendar__dates">
+                    {monthDates.map((date, index) => (
+                        <div key={index} className="calendar__date--container">
+                            <DateElement date={date}
+                                selectedDate={selectedDate}
+                                handlerSelectDate={handlerSelectDate} />
+                        </div>
+                    ))}
                 </div>
             </div>
-        </Portal>
+        </ModalComponent>
     );
 }
 

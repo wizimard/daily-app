@@ -172,6 +172,8 @@ export const taskSlice = createSlice({
         updateTask(state, action: PayloadAction<ITask>) {
             state.isChanged = false;
 
+            state.activeTask = action.payload;
+
             state.tasks = state.tasks.map((task) => (
                 task.id === action.payload.id ? action.payload : task
             ));

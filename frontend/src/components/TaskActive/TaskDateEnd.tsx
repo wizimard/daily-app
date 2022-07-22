@@ -11,7 +11,7 @@ const TaskDateEnd:React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const dateEnd = useAppSelector(state => state.task.activeTask?.date_end);
+    const dateEnd = useAppSelector(state => state.task.activeTask?.date_end) || '';
 
     const [isShow, setIsShow] = useState(false);
 
@@ -27,7 +27,7 @@ const TaskDateEnd:React.FC = () => {
     return (
         <span className="task__date task__date--end" onClick={handlerShowCalendar}>
             {formatDate(dateEnd)}
-            {isShow && <Calendar selectedDate={new Date()} handlerSelectDate={handlerSelectDate} />}
+            {isShow && <Calendar selectedDate={new Date(dateEnd)} handlerSelectDate={handlerSelectDate} />}
         </span>
     )
 };

@@ -30,6 +30,8 @@ class TaskService {
         title: string,
         description: string,
         todos: ITodo[]) {
+
+            const filterTodos = this.clearTrashTodos(todos);
             
             const task = await TaskModel.create({
                 author: new ObjectId(userId),
@@ -37,7 +39,7 @@ class TaskService {
                 date_end: new Date(date_end),
                 title,
                 description,
-                todos: todos.map(todo => ({ ...todo, id: v4()}))
+                todos: filterTodos.map(todo => ({ ...todo, id: v4()}))
             });
 
             const taskDto = new TaskDto(task);
@@ -66,6 +68,8 @@ class TaskService {
         description: string,
         todos: ITodo[]) {
 
+            const filterTodos = this.clearTrashTodos(todos);
+
             const task = await TaskModel.findOneAndUpdate({
                 _id: id,
                 author: new ObjectId(userId)
@@ -74,7 +78,7 @@ class TaskService {
                 date_end: new Date(date_end),
                 title,
                 description,
-                todos: todos.map(todo => ({ ...todo, id: v4()}))
+                todos: filterTodos.map(todo => ({ ...todo, id: v4()}))
             }, {new: true});
             
             if (!task) {
@@ -94,6 +98,21 @@ class TaskService {
         if (deleteData.deletedCount === 0) throw ApiError.NotFound();
 
         return true;
+    }
+    clearTrashTodos(todos: ITodo[], deepLevel: number = 0) {
+        if (deepLevel >= 4) return [];
+
+        const result: ITodo[] = [];
+        
+        for (let todo of todos) {
+            if (!todo.content) continue;
+
+            todo.todos = this.clearTrashTodos(todo.todos || [], deepLevel + 1);
+
+            result.push(todo);
+        }
+
+        return result;
     }
 }
 

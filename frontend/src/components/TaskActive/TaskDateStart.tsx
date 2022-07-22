@@ -11,7 +11,7 @@ const TaskDateStart:React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const dateStart = useAppSelector(state => state.task.activeTask?.date_start);
+    const dateStart = useAppSelector(state => state.task.activeTask?.date_start) || '';
 
     const [isShow, setIsShow] = useState(false);
 
@@ -27,7 +27,7 @@ const TaskDateStart:React.FC = () => {
     return (
         <span className="task__date task__date--start" onClick={handlerShowCalendar}>
             {formatDate(dateStart)}
-            {isShow && <Calendar selectedDate={new Date()} handlerSelectDate={handlerSelectDate} />}
+            {isShow && <Calendar selectedDate={new Date(dateStart)} handlerSelectDate={handlerSelectDate} />}
         </span>
     )
 };

@@ -1,10 +1,6 @@
 .calendar {
+    max-width: 70%;
     padding: 20px;
-
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 
     background-color: #fff;
     border-radius: 20px;
@@ -13,15 +9,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    &-container {
-        width: 100%;
-        height: 100%;
-
-        position: relative;
-
-        background-color: rgba($color: #000000, $alpha: 0.5);
-    }
+    
     &__month {
         width: 100%;
         padding-bottom: 20px;
@@ -62,14 +50,16 @@
         }
     }
     &__day {
-        width: 80px;
+        width: 14.2%;
 
         text-align: center;
 
         &s {
+            width: 100%;
+            
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
         }
     }
     &__date {
@@ -100,11 +90,11 @@
 
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             flex-wrap: wrap;
         }
         &--container {
-            width: 80px;
+            width: 14.2%;
             height: 50px;
 
             display: flex;

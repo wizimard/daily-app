@@ -6,6 +6,7 @@ export { default as Button } from './Button';
 export { default as ListScreen } from './ListScreen';
 export { default as ContentScreen } from './ContentScreen';
 export { default as ListItem } from './ListItem';
-export { default as Portal } from "./Portal";
 export { default as LayoutPage } from './LayoutPage';
 export { default as EmptyScreen } from './EmptyScreen';
+export { default as ImageViewer } from './ImageViewer';
+export { default as ModalComponent } from './ModalComponent';
