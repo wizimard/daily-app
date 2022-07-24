@@ -1,11 +1,11 @@
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 
 import $api, { $apiFile } from ".";
 
 import { IEntry } from "../models/IEntry";
 
-export async function fetchEntriesApi(): Promise<AxiosResponse<IEntry[]>> {
-    return await $api.get('/entries');
+export async function fetchEntriesApi(entriesLength: number): Promise<AxiosResponse<IEntry[]>> {
+    return await $api.get(`/entries?page=${Math.ceil(entriesLength / 6)}`);
 }
 export async function fetchEntryApi(id: string): Promise<AxiosResponse<IEntry>> {
     return await $api.get(`/entries/get/${id}`);

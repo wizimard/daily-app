@@ -25,8 +25,7 @@ const TaskList:React.FC<TaskListProps> = ({tasks, activeItem}) => {
                 <div className="task-create-item">
                     <div className="task-create-item__content">
                         <div className="img-container task-create-item__img">
-                            <img src={theme.img.add.x1} 
-                                 srcSet={`${theme.img.add.x1} 1x, ${theme.img.add.x2} 2x`}
+                            <img src={theme.img.add}
                                  alt="add" />
                         </div>
                         <h3 className="task-create-item__text">Create a new task</h3>

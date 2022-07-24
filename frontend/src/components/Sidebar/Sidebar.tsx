@@ -1,4 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+
+import { Settings } from "..";
 
 import { ThemeContext } from "../../themes/Themes";
 
@@ -16,16 +18,21 @@ const Sidebar: React.FC = () => {
 
     const user = useAppSelector(state => state.auth.user);
 
-    const { theme, switchTheme } = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
+
+    const [isShowSettings, setIsShowSettings] = useState(false);
+
+    const handlerChangeShowSettings = () => {
+        setIsShowSettings(prev => !prev);
+    }
     
     const handlerLogout = () => {
         dispatch(userSignOut());
     }
-    const handlerSwitchTheme = () => {
-        switchTheme();
-    }
 
     return (
+        <>
+        {isShowSettings && <Settings handlerOnClose={handlerChangeShowSettings} />}
         <div className="sidebar">
             <div className="sidebar__header">
                 <div className="img-container sidebar__avatar">
@@ -38,10 +45,12 @@ const Sidebar: React.FC = () => {
             </div>
             <Menu />
             <div className="sidebar__footer">
-                <div className="img-container img-click sidebar__theme">
-                    <img src={theme.img.theme} 
-                        onClick={handlerSwitchTheme} 
-                        alt="theme" />
+                <div className="sidebar__settings" 
+                     onClick={handlerChangeShowSettings}>
+                    <div className="img-container">
+                        <img src={theme.img.settings} alt="settings" />
+                    </div>
+                    <span>Settings</span>
                 </div>
                 <div className="img-container img-click sidebar__logout">
                     <img src={theme.img.logout}
@@ -50,6 +59,7 @@ const Sidebar: React.FC = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 

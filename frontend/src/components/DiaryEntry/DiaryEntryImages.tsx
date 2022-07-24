@@ -39,8 +39,7 @@ const DiaryEntryImages: React.FC = () => {
             <div className="entry__images--add">
                 <label className="add-image">
                     <div className="img-container">
-                        <img src={theme.img.add.x1}
-                            srcSet={`${theme.img.add.x1} 1x, ${theme.img.add.x2} 2x`} 
+                        <img src={theme.img.add}
                             alt="add" />
                     </div>
                     <input className="add-image__input" 

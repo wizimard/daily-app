@@ -75,8 +75,7 @@ const TaskActive:React.FC = () => {
                     </div>
                     <div className="task__header--right">
                         <div className="img-container img-click">
-                            <img src={theme.img.close.x1} 
-                                 srcSet={`${theme.img.close.x1} 1x, ${theme.img.close.x2} 2x`}
+                            <img src={theme.img.close}
                                  alt="close"
                                  onClick={handlerDeleteTask} />
                         </div>

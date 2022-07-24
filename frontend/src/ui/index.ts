@@ -10,3 +10,4 @@ export { default as LayoutPage } from './LayoutPage';
 export { default as EmptyScreen } from './EmptyScreen';
 export { default as ImageViewer } from './ImageViewer';
 export { default as ModalComponent } from './ModalComponent';
+export { default as Input } from './Input';

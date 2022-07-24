@@ -9,11 +9,11 @@ import { formatDate } from '../../helpers/date';
 
 import { IEntry } from '../../models/IEntry';
 
-export const fetchEntries = () => async(dispatch: AppDispatch) => {
+export const fetchEntries = (entriesLength: number) => async(dispatch: AppDispatch) => {
     dispatch(systemFetch());
 
     try {
-        const response = await fetchEntriesApi();        
+        const response = await fetchEntriesApi(entriesLength);
 
         dispatch(setEntries(response.data));
 

@@ -55,15 +55,13 @@ const TaskToDo:React.FC<TaskToDoProps> = ({ id, content, todos, isDone, deepLeve
             <div className="todo__actions">
                 {(deepLevel < 4 && !!content.trim()) && (
                     <div className="img-container img-click todo__add">
-                        <img src={theme.img.add.x1}
-                            srcSet={`${theme.img.add.x1} 1x, ${theme.img.add.x2} 2x`}
+                        <img src={theme.img.add}
                             alt="add"
                             onClick={handlerAddTodo} />
                     </div>
                 )}
                 <div className="img-container img-click">
-                    <img src={theme.img.close.x1}
-                        srcSet={`${theme.img.close.x1} 1x, ${theme.img.close.x2} 2x`}
+                    <img src={theme.img.close}
                         alt="close"
                         onClick={handlerDeleteTodo} />
                 </div>

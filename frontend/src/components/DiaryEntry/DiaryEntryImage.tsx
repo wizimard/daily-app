@@ -30,8 +30,7 @@ const DiaryEntryImage:React.FC<DiaryEntryImageProps> = ({ image, onClick }) => {
             <img src={image} alt={image} onClick={handlerOnClick} />
             <div className="img-container entry__image--delete" 
                  onClick={deleteImageHandle}>
-                <img src={theme.img.close.x1}
-                        srcSet={`${theme.img.close.x1} 1x, ${theme.img.close.x1} 2x`}
+                <img src={theme.img.close}
                         alt="delete" />
             </div>
         </div>

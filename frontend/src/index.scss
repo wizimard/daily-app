@@ -55,6 +55,8 @@ ul, li {
     padding: 3px;
     
     box-sizing: content-box;
+
+    cursor: pointer;
     
     &:hover, &:focus {
         border-radius: 50%;

@@ -21,7 +21,15 @@ export const entrySlice = createSlice({
     initialState,
     reducers: {
         setEntries(state, action: PayloadAction<IEntry[]>) {
-            state.entries = action.payload;
+            if (!action.payload || action.payload.length === 0) {
+                state.isAllFetching = true;
+                return;
+            }
+            state.entries = state.entries.concat(action.payload);
+        },
+        clearEntries(state) {
+            state.entries = [];
+            state.isAllFetching = false;
         },
         setActiveEntry(state, action: PayloadAction<IEntry | string>) {
             state.isChangedEntry = false;            
@@ -106,6 +114,7 @@ export const entrySlice = createSlice({
 });
 
 export const { setEntries,
+               clearEntries,
                setActiveEntry,
                clearActiveEntry,
                changeEntryContent,

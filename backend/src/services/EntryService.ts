@@ -9,10 +9,14 @@ import EntryModel from "../models/EntryModel";
 import { deleteCandidates, deleteFile } from "./ImageService";
 
 class EntryService {
-    async getEntries(userId: string) {
+    async getEntries(userId: string, page: number) {
         const entries = await EntryModel.find({
             author: new ObjectId(userId)
-        }, null, { sort: { date: -1 }});
+        }, null, {
+            sort: { date: -1 },
+            limit: 6,
+            skip: 6 * page
+        });
 
         const entriesDto: EntryDto[] = [];
 

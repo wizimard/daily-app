@@ -15,7 +15,9 @@ class EntryController {
                 return ApiError.UnauthorizedError();
             }
 
-            const entries = await EntryService.getEntries(user.id);            
+            const page = (typeof req.query.page === 'string') ? parseInt(req.query.page) : 0;
+
+            const entries = await EntryService.getEntries(user.id, page);
 
             return res.status(200).json(entries);
         } catch(e) {

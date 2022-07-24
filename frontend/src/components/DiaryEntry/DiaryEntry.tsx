@@ -1,5 +1,5 @@
-import React, { useCallback, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { ThemeContext } from "../../themes/Themes";
 
@@ -7,6 +7,7 @@ import { ContentScreen, EmptyScreen } from "../../ui";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
+import { fetchEntry } from "../../redux/action-creator/EntryActionCreator";
 import { systemSubmitModal } from "../../redux/reducers/SystemSlice";
 import { clearActiveEntry } from "../../redux/reducers/EntrySlice";
 import { systemConstants } from "../../constants/systemConstants";
@@ -24,6 +25,8 @@ import "./DiaryEntry.scss";
 const DiaryEntry: React.FC = () => {
 
     const navigate = useNavigate();
+
+    const activeId = useParams().id
 
     const dispatch = useAppDispatch();
 
@@ -51,6 +54,12 @@ const DiaryEntry: React.FC = () => {
         handlerBack();
     }, [dispatch, entryId, handlerBack]);
 
+    useEffect(() => {
+        
+        if (activeId && activeId !== 'undefined') dispatch(fetchEntry(activeId));
+
+    }, [dispatch, activeId]);
+
     return (
         <ContentScreen isDisplayNone={!entryId}>
         {!!entryId ? (
@@ -65,8 +74,7 @@ const DiaryEntry: React.FC = () => {
                         <span className="entry__date">{formatDate(entryDate)}</span>
                     </div>
                     <div className="img-container img-click entry__delete">
-                        <img src={theme.img.close.x1} 
-                                srcSet={`${theme.img.close.x1} 1x, ${theme.img.close.x2} 2x`} 
+                        <img src={theme.img.close}
                                 onClick={handlerDeleteEntry} 
                                 alt="delete" />
                     </div>

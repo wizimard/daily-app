@@ -22,8 +22,7 @@ const ModalComponent:React.FC<ModalComponentProps> = ({ closeModalHandle, childr
       <Portal handlerOnClose={closeModalHandle}>
         <div className='modal-component' onClick={handlerOnClickElement}>
           <div className="img-container modal-close">
-            <img src={theme.img.close.x1} 
-              srcSet={`${theme.img.close.x1} 1x, ${theme.img.close.x2} 2x`} 
+            <img src={theme.img.close}
               alt="close" />
           </div>
           { children }

@@ -1,21 +1,15 @@
 import { createContext, useEffect, useState } from 'react';
 
-import AddBlack1xPng from '../assets/img/add-black1x.png';
-import AddBlack2xPng from '../assets/img/add-black2x.png';
-import AddWhite1xPng from '../assets/img/add-white1x.png';
-import AddWhite2xPng from '../assets/img/add-white2x.png';
-import CloseBlack1xPng from '../assets/img/close-black1x.png';
-import CloseBlack2xPng from '../assets/img/close-black2x.png';
-import CloseWhite1xPng from '../assets/img/close-white1x.png';
-import CloseWhite2xPng from '../assets/img/close-white2x.png';
+import AddBlackSvg from '../assets/img/add_black.svg';
+import AddWhiteSvg from '../assets/img/add_white.svg';
+import CloseBlackSvg from '../assets/img/close_black.svg';
+import CloseWhiteSvg from '../assets/img/close_white.svg';
 // import LockBlack1xPng from '../assets/img/lock-black1x.png';
 // import LockBlack2xPng from '../assets/img/lock-black2x.png';
-import LockWhite1xPng from '../assets/img/lock-white1x.png';
-import LockWhite2xPng from '../assets/img/lock-white2x.png';
+import LockWhiteSvg from '../assets/img/lock_white.svg';
 // import MailBlack1xPng from '../assets/img/mail-black1x.png';
 // import MailBlack2xPng from '../assets/img/mail-black2x.png';
-import MailWhite1xPng from '../assets/img/mail-white1x.png';
-import MailWhite2xPng from '../assets/img/mail-white2x.png';
+import MailWhiteSvg from '../assets/img/email_white.svg';
 import DiaryIconBlackSvg from '../assets/img/diary-icon-black.svg';
 import DiaryIconWhiteSvg from '../assets/img/diary-icon-white.svg';
 import LogoutBlackSvg from '../assets/img/logout-black.svg';
@@ -24,76 +18,67 @@ import TaskIconBlackSvg from '../assets/img/task-icon-black.svg';
 import TaskIconWhiteSvg from '../assets/img/task-icon-white.svg';
 import ThemeBlackSvg from '../assets/img/theme_mode-black.svg';
 import ThemeWhiteSvg from '../assets/img/theme_mode-white.svg';
-import AvatarPng from '../assets/img/avatar.png';
 import CriticalPng from '../assets/img/critical.png';
 import DangerousPng from '../assets/img/dangerous.png';
 import DoneSvg from '../assets/img/done.svg';
 import ErrorSvg from '../assets/img/error.svg';
 import ArrowBackBlackSvg from '../assets/img/arrow-back-black.svg';
 import ArrowBackWhiteSvg from '../assets/img/arrow-back-white.svg';
-import DiaryDefaultPng from '../assets/img/diary-default.png';
+import SettingsBlackSvg from '../assets/img/settings_black.svg';
+import SettingWhiteSvg from '../assets/img/settings_white.svg';
+import AddImageWhiteSvg from '../assets/img/add_image_white.svg';
 
 export const themes = {
     light: {
         img: {
-            close: {
-                x1: CloseBlack1xPng,
-                x2: CloseBlack2xPng
-            },
-            add: {
-                x1: AddBlack1xPng,
-                x2: AddBlack2xPng
-            },
-            lock: {
-                x1: LockWhite1xPng,
-                x2: LockWhite2xPng
-            },
-            mail: {
-                x1: MailWhite1xPng,
-                x2: MailWhite2xPng
-            },
+            close: CloseBlackSvg,
+            add: AddBlackSvg,
+            lock: LockWhiteSvg,
+            mail: MailWhiteSvg,
             diary: DiaryIconBlackSvg,
             task: TaskIconBlackSvg,
             logout: LogoutBlackSvg,
             theme: ThemeBlackSvg,
-            avatar: AvatarPng,
+            avatar: 'http://localhost:3010/default/avatar.png',
             critical: CriticalPng,
             dangerous: DangerousPng,
             done: DoneSvg,
             error: ErrorSvg,
             back: ArrowBackBlackSvg,
-            diaryDefault: DiaryDefaultPng
+            diaryDefault: 'http://localhost:3010/default/diary-default.png',
+            settings: SettingsBlackSvg,
+            addImage: AddImageWhiteSvg
+        },
+        color: {
+            color: '#303A3D',
+            background: '#fff',
+            modalBg: 'rgba(255, 255, 255, 0.8)'
         }
     },
     dark: {
         img: {
-            close: {
-                x1: CloseWhite1xPng,
-                x2: CloseWhite2xPng
-            },
-            add: {
-                x1: AddWhite1xPng,
-                x2: AddWhite2xPng
-            },
-            lock: {
-                x1: LockWhite1xPng,
-                x2: LockWhite2xPng
-            },
-            mail: {
-                x1: MailWhite1xPng,
-                x2: MailWhite2xPng
-            },
+            close: CloseWhiteSvg,
+            add: AddWhiteSvg,
+            lock: LockWhiteSvg,
+            mail: MailWhiteSvg,
             diary: DiaryIconWhiteSvg,
             task: TaskIconWhiteSvg,
             logout: LogoutWhiteSvg,
             theme: ThemeWhiteSvg,
-            avatar: AvatarPng,
+            avatar: 'http://localhost:3010/default/avatar.png',
             critical: CriticalPng,
             dangerous: DangerousPng,
             done: DoneSvg,
             error: ErrorSvg,
             back: ArrowBackWhiteSvg,
-            diaryDefault: DiaryDefaultPng
+            diaryDefault: 'http://localhost:3010/default/diary-default.png',
+            settings: SettingWhiteSvg,
+            addImage: AddImageWhiteSvg
+        },
+        color: {
+            color: '#fff',
+            background: '#303A3D',
+            modalBg: 'rgba(48, 58, 61, 0.5)'
         }
     }
 }
