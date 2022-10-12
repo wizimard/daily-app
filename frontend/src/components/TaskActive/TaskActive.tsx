@@ -63,15 +63,6 @@ const TaskActive:React.FC = () => {
                                 alt="back" />
                         </div>
                         <TaskDateStart /> - <TaskDateEnd />
-                        {activeTaskStatus.status && (
-                            <div className="img-container">
-                                {activeTaskStatus.status === 'dangerous' ? (
-                                    <img src={theme.img.dangerous} alt="dangerous" />
-                                ) : (
-                                    <img src={theme.img.critical} alt="critical" />
-                                )}
-                            </div>
-                        )}
                     </div>
                     <div className="task__header--right">
                         <div className="img-container img-click">

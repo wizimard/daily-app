@@ -44,19 +44,7 @@ const TaskList:React.FC<TaskListProps> = ({tasks, activeItem}) => {
                                 <h3 className="task-item__title">{task.title}</h3>
                             </div>
                             <div className="task-item__right">
-                                <div className="img-container task-item__status">
-                                    {task.status.status && (
-                                        <>
-                                        {task.status.status === 'dangerous' ? (
-                                            <img src={theme.img.dangerous} alt="dangerous" />
-                                        ) : (
-                                            <img src={theme.img.critical} alt="critical" />
-                                        )}
-                                        </>
-                                    )}
-                                    
-                                </div>
-                                <span className="task-item__done">{task.status.done}</span>
+                                <span className="task-item__done">{task.status}</span>
                             </div>
                         </ListItem>
                     </li>

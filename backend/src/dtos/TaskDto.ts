@@ -1,4 +1,4 @@
-import { ITask } from "../models/TaskModel";
+import { ITask, ITodo } from "../models/TaskModel";
 
 export default class TaskDto {
     id;
@@ -16,9 +16,27 @@ export default class TaskDto {
         this.title = model.title;
         this.description = model.description;
         this.todos = model.todos || [];
-        this.status = {
-            status: 'critical',
-            done: '1/3'
-        };
+        this.status = this.getStatus(model.todos);
+    }
+    getStatus(todos: ITodo[]) {
+        if (todos.length === 0) return '0/0';
+
+        const stack = JSON.parse(JSON.stringify(todos));
+        let countIsDone = 0;
+        let countAll = 0;
+
+        while (true) {
+            const item = stack.shift();
+            if (!item) break;
+
+            const newTodos = item.todos ?? [];
+
+            stack.push(...newTodos);
+
+            countAll++;
+            if (item.isDone) countIsDone++;
+        }
+
+        return `${countIsDone}/${countAll}`;
     }
 }

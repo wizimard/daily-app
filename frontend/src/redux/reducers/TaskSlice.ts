@@ -46,10 +46,7 @@ export const taskSlice = createSlice({
                     title: '',
                     description: '',
                     todos: [],
-                    status: {
-                        status: 'running',
-                        done: ''
-                    }
+                    status: '0/0'
                 }
                 return;
             }            

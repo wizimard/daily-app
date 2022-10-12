@@ -89,6 +89,21 @@ class UserController {
         }
         return;
     }
+    async update(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = req.user?.id;
+            if (!id) throw ApiError.UnauthorizedError();
+
+            const { user } = req.body;
+            
+            const userData = await UserService.update({ id, ...user });
+
+            return res.json(userData);
+        } catch(e) {
+            next(e);
+        }
+        return;
+    }
 }
 
 export default new UserController();

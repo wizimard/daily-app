@@ -30,10 +30,15 @@ body, #root, .App {
     display: flex;
 }
 .list-screen, .content-screen {
-    width: 50%;
     height: 100%;
     
     overflow: auto;
+}
+.list-screen {
+    width: 45%;
+}
+.content-screen {
+    width: 55%;
 }
 .content-screen {
     padding: 20px;

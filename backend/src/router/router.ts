@@ -6,6 +6,8 @@ import authMiddleware from '../middlewares/authMiddleware';
 import UserController from '../controllers/UserController';
 import EntryController from '../controllers/EntryController';
 import TaskController from '../controllers/TaskController';
+import FileController from '../controllers/FileController';
+
 import { upload } from '../services/ImageService';
 
 const router = Router();
@@ -23,6 +25,8 @@ router.post('/logout', UserController.logout);
 router.get('/confirm/:link', UserController.confirm);
 router.get('/refresh', UserController.refresh);
 
+router.put('/user/update', authMiddleware, UserController.update);
+
 router.get('/entries', authMiddleware, EntryController.getEntries);
 router.get('/entries/get/:id', authMiddleware, EntryController.getEntry);
 router.post('/entries/add', 
@@ -36,7 +40,6 @@ router.put('/entries/update',
     authMiddleware, 
     EntryController.updateEntry);
 router.delete('/entries/delete/:id', authMiddleware, EntryController.deleteEntry);
-router.post('/entries/image', authMiddleware, upload.array('images', 10), EntryController.uploadImage);
 
 router.get('/tasks', authMiddleware, TaskController.getTasks);
 router.get('/task/:id', authMiddleware, TaskController.getTask);
@@ -50,5 +53,6 @@ router.put('/tasks/update',
     TaskController.updateTask);
 router.delete('/tasks/:id', authMiddleware, TaskController.deleteTask);
 
+router.post('/upload/image', authMiddleware, upload.array('images', 10), FileController.uploadImage);
 
 export default router;

@@ -12,6 +12,13 @@ import TokenService from './TokenService';
 
 import { API_URL } from '../constants';
 
+type UserUpdate = {
+    id: string;
+    email: string;
+    username: string;
+    avatar: string;
+}
+
 class UserService {
     async registration(email: string, password: string, username?: string) {
         const candidate = await UserModel.findOne({email});
@@ -106,9 +113,29 @@ class UserService {
             user: userDto
         }
     }
-    async getAllUsers() {
-        const users = await UserModel.find();
-        return users;
+    async update(updateUser: UserUpdate) {
+        const user = await UserModel.findById(updateUser.id);
+        if (!user) throw ApiError.BadRequest('User not found');
+
+        user.username = updateUser.username;
+        
+        if (user.email !== updateUser.email) {
+
+            user.email = updateUser.email;
+
+            user.isConfirm = false;
+
+            const confirmLink = uuid();
+
+            await MailService.sendConfirmMail(updateUser.email, `${API_URL}/api/confirm/${confirmLink}`);
+        }
+        user.avatar = updateUser.avatar;
+
+        await user.save();
+
+        const userDto = new UserDto(user);
+
+        return userDto;
     }
 }
 

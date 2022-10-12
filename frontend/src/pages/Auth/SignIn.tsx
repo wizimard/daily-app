@@ -54,8 +54,7 @@ const SignIn: React.FC = () => {
             <Form className="auth__form" onSubmit={handleSubmit}>
                 <div className="auth__input">
                     <div className="img-container auth__input--icon">
-                        <img src={theme.img.mail.x1}
-                            srcSet={`${theme.img.mail.x1} 1x, ${theme.img.mail.x2} 2x`} 
+                        <img src={theme.img.mail}
                             alt="mail" />
                     </div>
                     <Field type="email"
@@ -71,8 +70,7 @@ const SignIn: React.FC = () => {
                 </div>
                 <div className="auth__input">
                     <div className="img-container auth__input--icon">
-                        <img src={theme.img.lock.x1}
-                            srcSet={`${theme.img.lock.x1} 1x, ${theme.img.lock.x2} 2x`} 
+                        <img src={theme.img.lock}
                             alt="lock" />
                     </div>
                     <Field type="password"

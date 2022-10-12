@@ -25,6 +25,3 @@ export async function updateEntryApi(entry: IEntry): Promise<AxiosResponse<IEntr
 export async function deleteEntryApi(id: string) {
     return await $api.delete(`/entries/delete/${id}`);
 }
-export async function uploadEntryImage(data: FormData): Promise<AxiosResponse<string[]>> {
-    return await $apiFile.post('/entries/image', data);
-}

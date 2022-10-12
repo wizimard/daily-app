@@ -11,8 +11,5 @@ export interface ITask {
     title: string;
     description: string;
     todos: ITodo[];
-    status: {
-        done: string;
-        status: string;
-    };
+    status: string;
 }

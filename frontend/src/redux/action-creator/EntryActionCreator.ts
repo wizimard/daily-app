@@ -3,7 +3,8 @@ import { AppDispatch } from "../store";
 import { addEntry, addEntryImages, removeEntry, setActiveEntry, setEntries, updateEntry } from '../reducers/EntrySlice';
 import { systemFetch, systemFetchError, systemFetchSuccess } from '../reducers/SystemSlice';
 
-import { deleteEntryApi, fetchEntriesApi, fetchEntryApi, addEntryApi, updateEntryApi, uploadEntryImage } from '../../api/entryApi';
+import { deleteEntryApi, fetchEntriesApi, fetchEntryApi, addEntryApi, updateEntryApi } from '../../api/entryApi';
+import { uploadImage } from '../../api/fileApi';
 
 import { formatDate } from '../../helpers/date';
 
@@ -115,7 +116,7 @@ export const uploadImages = (images: FileList | null) => {
                 data.append(`images`, image);
             }
 
-            const response = await uploadEntryImage(data);
+            const response = await uploadImage(data);
 
             dispatch(addEntryImages(response.data));
             
