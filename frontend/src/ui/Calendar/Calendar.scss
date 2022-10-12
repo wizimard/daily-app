@@ -1,0 +1,105 @@
+.calendar {
+    max-width: 70%;
+    padding: 20px;
+
+    background-color: #fff;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    &__month {
+        width: 100%;
+        padding-bottom: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &--arrow {
+            padding: 5px;
+            
+            display: inline-block;
+
+            border: solid black;
+            border-width: 0 5px 5px 0;
+
+            cursor: pointer;
+
+            &:hover {
+                border-color: #1461E8;
+            }
+        }
+        &--prev {
+            transform: rotate(135deg);
+            -webkit-transform: rotate(135deg);
+        }
+        &--next {
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+        &--value {
+            width: 50%;
+            padding: 0 10px;
+
+            font-size: 1.5em;
+
+            text-align: center;
+        }
+    }
+    &__day {
+        width: 14.2%;
+
+        text-align: center;
+
+        &s {
+            width: 100%;
+            
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+    &__date {
+        width: 40px;
+        height: 40px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 1em;
+
+        border-radius: 50%;
+
+        cursor: pointer;
+        
+        &:hover {
+            background-color: #1461E8;
+        }
+        &_today {
+            background-color: #558BE8;
+        }
+        &_active {
+            background-color: #1BE717;
+        }
+        &s {
+            padding-top: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        &--container {
+            width: 14.2%;
+            height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

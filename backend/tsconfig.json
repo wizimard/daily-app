@@ -1,0 +1,47 @@
+{
+	"compilerOptions": {
+		"target": "ES6",
+		"module": "CommonJS",
+		"moduleResolution": "node",
+		"lib": [
+			"es2015"
+		],
+		"typeRoots": ["types"],
+
+		"rootDir": "src",
+		"outDir": "lib",
+
+		"strict": true,
+		"alwaysStrict": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
+
+		"forceConsistentCasingInFileNames": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noFallthroughCasesInSwitch": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"downlevelIteration": true,
+		"declaration": true,
+
+		"pretty": true,
+		
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+	},
+	"include": [
+		"typings/**/*",
+		"src/**/*", 
+		"types"
+	],
+	"files": [
+		"types/express.d.ts",
+		"src/index.ts"
+	]
+}

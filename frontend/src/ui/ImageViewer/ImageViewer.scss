@@ -1,0 +1,64 @@
+.image {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-viewer {
+        width: 70%;
+        height: 70vh;
+
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: rgba($color: #000, $alpha: 0.2);
+    }
+    &-prev, &-next {
+        height: 100%;
+        padding: 0 10px;
+
+        position: absolute;
+        top: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: #000;
+        opacity: 0.2;
+
+        cursor: pointer;
+
+        & .triangle {
+            width: 0;
+            height: 0;
+        }
+        &:hover {
+            opacity: 0.8;
+            background-color: rgba($color: #000000, $alpha: 0.5);
+        }
+    }
+    &-prev {
+        left: 0;
+
+        & .triangle {
+            border-top: 50px solid transparent;
+            border-right: 50px solid #fff;
+            border-bottom: 50px solid transparent;
+        }
+    }
+    &-next {
+        right: 0;
+
+        & .triangle {
+            border-top: 50px solid transparent;
+            border-left: 50px solid #fff;
+            border-bottom: 50px solid transparent;
+        }
+    }
+}
